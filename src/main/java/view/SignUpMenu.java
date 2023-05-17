@@ -49,9 +49,18 @@ public class SignUpMenu extends Application {
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("signup error");
         switch  (controllerLoginMenu.signIn(username,password,passwordConfirmation)){
+            case HAS_SPACE:
+                alert.setHeaderText("has space");
+                alert.setContentText("username and password can't have space");
+                alert.showAndWait();
             case SHORT_USERNAME:
                 alert.setHeaderText("short username");
                 alert.setContentText("username must contain at least 3 characters");
+                alert.showAndWait();
+                return;
+            case GUEST_USERNAME:
+                alert.setHeaderText("username");
+                alert.setContentText("this username is specific to guests");
                 alert.showAndWait();
                 return;
             case USERNAME_EXISTS:

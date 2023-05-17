@@ -24,6 +24,8 @@ public class ControllerLoginMenu {
     public LoginMessages signIn(String username, String password, String passwordConfirmation) throws IOException, NoSuchAlgorithmException {
         if (username.contains(" ") || password.contains(" "))
             return LoginMessages.HAS_SPACE;
+        if (username.startsWith("Guest_"))
+            return LoginMessages.GUEST_USERNAME;
         if (username.length() < 3) return LoginMessages.SHORT_USERNAME;
         if (User.getUser(username) != null) return LoginMessages.USERNAME_EXISTS;
         if (isPasswordWeek(password)) return LoginMessages.WEEK_PASSWORD;

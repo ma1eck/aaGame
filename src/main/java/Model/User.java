@@ -82,6 +82,17 @@ public class User {
         return null;
     }
 
+    public static void pureUsers() throws IOException { // delete Guests
+        for (int i=users.size()-1; i>=0 ; i--){
+            if (users.get(i).isGuest()) users.remove(i);
+        }
+        writeUsers();
+    }
+
+    private boolean isGuest() {
+        return this.username.startsWith("Guest_");
+    }
+
     public boolean checkPassword(String password) throws NoSuchAlgorithmException {
         String toHashPassword = makeHash.toSHA256(password);
         return this.passwordHash.equals(toHashPassword);

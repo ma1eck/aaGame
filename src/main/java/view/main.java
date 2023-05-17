@@ -23,6 +23,7 @@ public class main {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException { //run this
         User.readUsers();
+        User.pureUsers();
         main.args = args;
         PreLoginMenu.main(args);
     }

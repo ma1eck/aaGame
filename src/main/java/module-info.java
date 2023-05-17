@@ -6,6 +6,7 @@ module aa {
 
     exports view;
     exports Model;
+
     opens view to javafx.fxml;
     opens Model to com.google.gson;
 }
