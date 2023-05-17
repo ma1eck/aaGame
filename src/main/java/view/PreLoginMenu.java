@@ -1,5 +1,6 @@
 package view;
 
+import Controller.ControllerLoginMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,11 +10,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 
 public class PreLoginMenu extends Application {
     private static Stage stage;
-
+    ControllerLoginMenu loginMenuController;
+    {
+        loginMenuController = new ControllerLoginMenu(main.controller());
+    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -35,7 +41,8 @@ public class PreLoginMenu extends Application {
         System.out.println("want to signup");
         new SignUpMenu().start(stage);
     }
-    public void enterAsGuest(){
+    public void enterAsGuest() throws IOException, NoSuchAlgorithmException {
         System.out.println("want to enter as guest");
+        loginMenuController.loginAsGuest();
     }
 }
