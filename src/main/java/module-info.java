@@ -9,4 +9,6 @@ module aa {
 
     opens view to javafx.fxml;
     opens Model to com.google.gson;
+    exports view.Login;
+    opens view.Login to javafx.fxml;
 }

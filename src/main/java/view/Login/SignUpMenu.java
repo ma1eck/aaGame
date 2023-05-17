@@ -1,4 +1,4 @@
-package view;
+package view.Login;
 
 import Controller.ControllerLoginMenu;
 import javafx.application.Application;
@@ -11,10 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import view.main;
 
-import java.io.IOException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 
 public class SignUpMenu extends Application {
     private static Stage stage;

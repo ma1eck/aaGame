@@ -1,10 +1,8 @@
 package Controller;
 
 import Model.User;
-import javafx.application.Application;
-import view.LoginMenu;
 import view.MainMenu;
-import view.PreLoginMenu;
+import view.Login.PreLoginMenu;
 import view.ProfileMenu;
 
 public class Controller {

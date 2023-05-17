@@ -2,12 +2,10 @@ package view;
 
 import Controller.Controller;
 import Model.User;
-import com.google.gson.Gson;
+import view.Login.PreLoginMenu;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 public class main {
     private static Controller controller = new Controller();
