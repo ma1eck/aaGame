@@ -2,22 +2,17 @@ package Controller;
 
 import Controller.Messages.LoginMessages;
 import Model.User;
+import view.main;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 public class ControllerLoginMenu {
-    private Controller controller;
-
-    public ControllerLoginMenu(Controller controller) {
-        this.controller = controller;
-    }
-
     public LoginMessages login(String username, String password) throws NoSuchAlgorithmException {
         User user = User.getUser(username);
         if (user == null) return LoginMessages.USERNAME_DOESNT_EXIST;
         if (!user.checkPassword(password)) return LoginMessages.WRONG_PASSWORD;
-        controller.setCurrentUser(user);
+        main.controller().setCurrentUser(user);
         return LoginMessages.SUCCESSFUL;
     }
 
@@ -31,13 +26,13 @@ public class ControllerLoginMenu {
         if (isPasswordWeek(password)) return LoginMessages.WEEK_PASSWORD;
         if (!password.equals(passwordConfirmation)) return LoginMessages.WRONG_CONFIRMATION;
         User user = User.makeUser(username, password);
-        controller.setCurrentUser(user);
+        main.controller().setCurrentUser(user);
         return LoginMessages.SUCCESSFUL;
     }
 
     public LoginMessages loginAsGuest() throws IOException, NoSuchAlgorithmException {
         User user = User.makeGuest();
-        controller.setCurrentUser(user);
+        main.controller().setCurrentUser(user);
         return LoginMessages.SUCCESSFUL;
     }
 

@@ -33,7 +33,7 @@ public class LoginMenu extends Application {
     private ControllerLoginMenu controllerLoginMenu;
 
     {
-        controllerLoginMenu = new ControllerLoginMenu(main.controller());
+        controllerLoginMenu = new ControllerLoginMenu();
     }
     @FXML
     private TextField username;

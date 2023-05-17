@@ -14,7 +14,7 @@ public class PreLoginMenu extends Application {
     private static Stage stage;
     ControllerLoginMenu loginMenuController;
     {
-        loginMenuController = new ControllerLoginMenu(main.controller());
+        loginMenuController = new ControllerLoginMenu();
     }
     public static void main(String[] args) {
         launch(args);

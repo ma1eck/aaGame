@@ -15,8 +15,8 @@ public class MainMenu extends Application {
     public void start(Stage stage) throws Exception {
         MainMenu.stage = stage;
         stage.setTitle("aa");
-        URL url = MainMenu.class.getResource("/FXML/MainMenu.fxml"); // todo
-        BorderPane pane = FXMLLoader.load(url); // todo
+        URL url = MainMenu.class.getResource("/FXML/MainMenu.fxml");
+        BorderPane pane = FXMLLoader.load(url);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();

@@ -121,10 +121,18 @@ public class User {
         }
     }
 
-    private static void writeUsers() throws IOException {
+    public static void writeUsers() throws IOException {
         Gson gson = new Gson();
         FileWriter file = new FileWriter("src/main/java/DB/Users");
         file.write(gson.toJson(users));
         file.close();
+    }
+
+    public void setPassword(String password) throws NoSuchAlgorithmException {
+        passwordHash = makeHash.toSHA256(password);
+    }
+
+    public void setUsername(String newUsername) {
+        username = newUsername;
     }
 }

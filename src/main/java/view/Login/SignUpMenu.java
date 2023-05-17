@@ -37,7 +37,7 @@ public class SignUpMenu extends Application {
     private ControllerLoginMenu controllerLoginMenu;
 
     {
-        controllerLoginMenu = new ControllerLoginMenu(main.controller());
+        controllerLoginMenu = new ControllerLoginMenu();
     }
 
     public void signUp(MouseEvent mouseEvent) throws Exception {
