@@ -32,7 +32,7 @@ public class User {
     public static User makeUser(String username, String password) throws IOException, NoSuchAlgorithmException {
         User user = new User(username, password);
         users.add(user);
-        //writeUsers();
+        writeUsers();
         return user;
     }
 

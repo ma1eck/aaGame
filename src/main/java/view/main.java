@@ -22,14 +22,8 @@ public class main {
     }
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException { //run this
-//        FileWriter file = new FileWriter("src/main/java/DB/Users");
-//        Gson gson = new Gson();
-//        ArrayList<User> users = new ArrayList<>();
-//        users.add(User.makeGuest());
-//        System.out.println(gson.toJson(users));
-        //User.readUsers();
+        User.readUsers();
         main.args = args;
         PreLoginMenu.main(args);
-        // write users
     }
 }
