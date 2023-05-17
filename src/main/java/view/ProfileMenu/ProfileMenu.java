@@ -11,16 +11,13 @@ import view.MainMenu;
 import view.main;
 
 import java.awt.Dimension;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ProfileMenu extends Application {
     private static Stage stage;
@@ -57,6 +54,20 @@ public class ProfileMenu extends Application {
     }
 
     public void removeAccount(MouseEvent mouseEvent) throws Exception {
+        if (getConfirmationToRemove()) {
+            main.controller().removeCurrentUser();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("You have remove an account successfully");
+            alert.showAndWait();
+            main.controller().preLoginMenu().start(stage);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Removing account got cancelled");
+            alert.showAndWait();
+        }
+    }
+
+    private boolean getConfirmationToRemove() {
         JPanel panel = new JPanel();
         panel.setSize(new Dimension(100, 75));
         panel.setLayout(null);
@@ -68,16 +79,6 @@ public class ProfileMenu extends Application {
         UIManager.put("OptionPane.minimumSize", new Dimension(200, 150));
         int confirmation = JOptionPane.showConfirmDialog(null, panel, "removing account",
                 JOptionPane.YES_NO_OPTION);
-        if (confirmation == 0) {
-            main.controller().removeCurrentUser();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("You have remove an account successfully");
-            alert.showAndWait();
-            main.controller().preLoginMenu().start(stage);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Removing account got cancelled");
-            alert.showAndWait();
-        }
+        return confirmation == 0;
     }
 }
