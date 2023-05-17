@@ -8,6 +8,8 @@ import view.ProfileMenu.ChangePasswordMenu;
 import view.ProfileMenu.ChangeUsernameMenu;
 import view.ProfileMenu.ProfileMenu;
 
+import java.io.IOException;
+
 public class Controller {
     private PreLoginMenu preLoginMenu = null;
     private ProfileMenu profileMenu = null;
@@ -52,5 +54,12 @@ public class Controller {
 
     public void logout() {
         currentUser = null;
+    }
+
+    public void removeCurrentUser() throws IOException {
+        if (currentUser==null) return;
+        User.remove(currentUser);
+        currentUser = null;
+        User.writeUsers();
     }
 }

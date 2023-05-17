@@ -10,11 +10,21 @@ import javafx.stage.Stage;
 import view.MainMenu;
 import view.main;
 
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ProfileMenu extends Application {
     private static Stage stage;
+
     @Override
     public void start(Stage stage) throws Exception {
         ProfileMenu.stage = stage;
@@ -44,5 +54,30 @@ public class ProfileMenu extends Application {
         alert.setHeaderText("You logged out");
         alert.showAndWait();
         main.controller().preLoginMenu().start(stage);
+    }
+
+    public void removeAccount(MouseEvent mouseEvent) throws Exception {
+        JPanel panel = new JPanel();
+        panel.setSize(new Dimension(100, 75));
+        panel.setLayout(null);
+        JLabel label1 = new JLabel("Ary you sure ?");
+        label1.setVerticalAlignment(SwingConstants.BOTTOM);
+        label1.setBounds(10, 10, 100, 30);
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(label1);
+        UIManager.put("OptionPane.minimumSize", new Dimension(200, 150));
+        int confirmation = JOptionPane.showConfirmDialog(null, panel, "removing account",
+                JOptionPane.YES_NO_OPTION);
+        if (confirmation == 0) {
+            main.controller().removeCurrentUser();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("You have remove an account successfully");
+            alert.showAndWait();
+            main.controller().preLoginMenu().start(stage);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Removing account got cancelled");
+            alert.showAndWait();
+        }
     }
 }

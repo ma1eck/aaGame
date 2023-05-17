@@ -89,6 +89,10 @@ public class User {
         writeUsers();
     }
 
+    public static void remove(User user) {
+        users.remove(user);
+    }
+
     private boolean isGuest() {
         return this.username.startsWith("Guest_");
     }

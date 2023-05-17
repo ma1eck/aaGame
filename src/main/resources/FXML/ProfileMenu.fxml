@@ -15,6 +15,8 @@
             <Button text="change username" onMouseClicked="#changeUsername"/>
             <Button text="change password" onMouseClicked="#changePassword"/>
             <Button text="logout" onMouseClicked="#logout"/>
+            <Button text="remove account" onMouseClicked="#removeAccount"/>
+
             <Button text="back" onMouseClicked="#back"/>
 
         </VBox>
