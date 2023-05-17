@@ -18,7 +18,7 @@ import com.google.gson.*;
 public class User {
     private static ArrayList<User> users;
     private String username = null;
-    private String passwordHash = null; 
+    private String passwordHash = null;
 
     static {
         users = new ArrayList<>();

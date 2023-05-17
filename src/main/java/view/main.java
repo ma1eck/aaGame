@@ -29,7 +29,7 @@ public class main {
 //        System.out.println(gson.toJson(users));
         //User.readUsers();
         main.args = args;
-        //PreLoginMenu.main(args);
+        PreLoginMenu.main(args);
         // write users
     }
 }
