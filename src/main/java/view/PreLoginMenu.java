@@ -41,8 +41,9 @@ public class PreLoginMenu extends Application {
         System.out.println("want to signup");
         new SignUpMenu().start(stage);
     }
-    public void enterAsGuest() throws IOException, NoSuchAlgorithmException {
+    public void enterAsGuest() throws Exception {
         System.out.println("want to enter as guest");
         loginMenuController.loginAsGuest();
+        main.controller().mainMenu().start(stage);
     }
 }

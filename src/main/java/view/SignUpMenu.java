@@ -41,7 +41,7 @@ public class SignUpMenu extends Application {
         controllerLoginMenu = new ControllerLoginMenu(main.controller());
     }
 
-    public void signUp(MouseEvent mouseEvent) throws IOException, NoSuchAlgorithmException {
+    public void signUp(MouseEvent mouseEvent) throws Exception {
         String username = this.username.getText();
         String password = this.password.getText();
         String passwordConfirmation = this.passwordConfirmation.getText();
@@ -81,8 +81,8 @@ public class SignUpMenu extends Application {
                 return;
             case SUCCESSFUL:
                 System.out.println("signed up");
-                return; // todo : complete these
-
+                main.controller().mainMenu().start(stage);
+                return;
         }
     }
 

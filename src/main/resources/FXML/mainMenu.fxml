@@ -6,14 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.MainMenuController"
-            prefHeight="400.0" prefWidth="600.0" alignment="CENTER" hgap="20" vgap="20">
-
-    <CheckBox text="cell 0 0" GridPane.columnIndex="0" GridPane.rowIndex="0"  onMouseClicked="#mark"/>
-    <CheckBox text="cell 0 1" GridPane.columnIndex="1" GridPane.rowIndex="0"  onMouseClicked="#mark"/>
-    <CheckBox text="cell 1 0" GridPane.columnIndex="0" GridPane.rowIndex="1"  onMouseClicked="#mark"/>
-    <CheckBox text="cell 1 1" GridPane.columnIndex="1" GridPane.rowIndex="1"  onMouseClicked="#mark"/>
-
-</GridPane>
+            fx:controller="view.MainMenu"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <Label text="main menu"/>
+            <Button text="profile menu" onMouseClicked="#enterProfileMenu"/>
+        </VBox>
+    </center>
+</BorderPane>

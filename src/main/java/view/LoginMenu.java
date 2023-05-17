@@ -59,7 +59,7 @@ public class LoginMenu extends Application {
                 return;
             case SUCCESSFUL:
                 System.out.println("logged in");
-                // enter game
+                main.controller().mainMenu().start(stage);
                 return;
         }
     }

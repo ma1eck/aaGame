@@ -3,6 +3,7 @@ package view;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -19,5 +20,9 @@ public class MainMenu extends Application {
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void enterProfileMenu(MouseEvent mouseEvent) throws Exception {
+        main.controller().profileMenu().start(stage);
     }
 }
