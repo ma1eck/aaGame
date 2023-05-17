@@ -3,6 +3,7 @@ package view.ProfileMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -35,5 +36,13 @@ public class ProfileMenu extends Application {
 
     public void back(MouseEvent mouseEvent) throws Exception {
         main.controller().mainMenu().start(stage);
+    }
+
+    public void logout(MouseEvent mouseEvent) throws Exception {
+        main.controller().logout();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("You logged out");
+        alert.showAndWait();
+        main.controller().preLoginMenu().start(stage);
     }
 }

@@ -14,6 +14,7 @@
         <VBox alignment="CENTER" spacing="20">
             <Button text="change username" onMouseClicked="#changeUsername"/>
             <Button text="change password" onMouseClicked="#changePassword"/>
+            <Button text="logout" onMouseClicked="#logout"/>
             <Button text="back" onMouseClicked="#back"/>
 
         </VBox>

@@ -49,4 +49,8 @@ public class Controller {
         if (changePasswordMenu == null) changePasswordMenu = new ChangePasswordMenu();
         return changePasswordMenu;
     }
+
+    public void logout() {
+        currentUser = null;
+    }
 }
