@@ -11,4 +11,16 @@ public class GetRandom {
     public static int getInt(int lowerBound, int upperBound){
         return random().nextInt(lowerBound,upperBound);
     }
+
+    public static String getString(int length) {
+        StringBuilder str = new StringBuilder();
+        int size = GetRandom.getInt(2, length+1);
+        for (int i = 0; i < size; i++) {
+            str.append((char) GetRandom.getInt('a', 'z'+1));
+        }
+        for (int i = size; i < length; i++) {
+            str.append((char) GetRandom.getInt('1', '9'+1));
+        }
+        return str.toString();
+    }
 }

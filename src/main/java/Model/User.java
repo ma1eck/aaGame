@@ -64,15 +64,7 @@ public class User {
         StringBuilder randomUsername;
         String username;
         do {
-            randomUsername = new StringBuilder();
-            int size = GetRandom.getInt(2, 8);
-            for (int i = 0; i < size; i++) {
-                randomUsername.append((char) GetRandom.getInt('a', 'z'+1));
-            }
-            for (int i = size; i < 7; i++) {
-                randomUsername.append((char) GetRandom.getInt('1', '9'+1));
-            }
-            username = "Guest_" + randomUsername.toString();
+            username = "Guest_" + GetRandom.getString(7);
         } while (getUser(username) != null);
         return username;
     }
