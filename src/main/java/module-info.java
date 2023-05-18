@@ -8,7 +8,7 @@ module aa {
     exports view;
     exports Model;
 
-    opens view to javafx.fxml;
+    opens view to javafx.fxml, javafx.graphics;
     opens Model to com.google.gson;
     exports view.Login;
     opens view.Login to javafx.fxml;

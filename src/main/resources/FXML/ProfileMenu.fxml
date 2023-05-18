@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.ProfileMenu.ProfileMenu"
-            prefHeight="400.0" prefWidth="600.0">
-    <center>
-        <VBox alignment="CENTER" spacing="20">
-            <Button text="change username" onMouseClicked="#changeUsername"/>
-            <Button text="change password" onMouseClicked="#changePassword"/>
-            <Button text="logout" onMouseClicked="#logout"/>
-            <Button text="remove account" onMouseClicked="#removeAccount"/>
+<HBox prefHeight="400.0" prefWidth="600.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ProfileMenu.ProfileMenu">
 
-            <Button text="back" onMouseClicked="#back"/>
+        <VBox alignment="CENTER" prefHeight="400.0" prefWidth="305.0" spacing="20">
+            <Button onMouseClicked="#changeUsername" text="change username" />
+            <Button onMouseClicked="#changePassword" text="change password" />
+            <Button onMouseClicked="#logout" text="logout" />
+            <Button onMouseClicked="#removeAccount" text="remove account" />
+
+            <Button onMouseClicked="#back" text="back" />
 
         </VBox>
-    </center>
+   <VBox prefHeight="400.0" prefWidth="268.0">
+      <children>
+         <HBox prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Label prefHeight="73.0" prefWidth="115.0" text="username :" textAlignment="CENTER" />
+               <Label fx:id="usernameLabel" prefHeight="73.0" prefWidth="174.0" text="Label" />
+            </children>
+         </HBox>
+         <VBox fx:id="vBoxAvatar" prefHeight="200.0" prefWidth="100.0">
+            <children>
+               <Label prefHeight="73.0" prefWidth="174.0" text="Avatar : " textAlignment="CENTER" />
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+            </children>
+         </VBox>
+      </children>
+   </VBox>
 
-</BorderPane>
+</HBox>
