@@ -1,9 +1,10 @@
 package Controller;
 
 import Model.User;
-import javafx.application.Application;
 import view.MainMenu;
 import view.Login.PreLoginMenu;
+import view.ProfileMenu.Avatar.AvatarMenu;
+import view.ProfileMenu.Avatar.DefaultAvatarMenu;
 import view.ProfileMenu.ChangePasswordMenu;
 import view.ProfileMenu.ChangeUsernameMenu;
 import view.ProfileMenu.ProfileMenu;
@@ -16,6 +17,9 @@ public class Controller {
     private MainMenu mainMenu = null;
     private ChangeUsernameMenu changeUsernameMenu = null;
     private ChangePasswordMenu changePasswordMenu = null;
+    private DefaultAvatarMenu defaultAvatarMenu = null;
+
+    private AvatarMenu avatarMenu = null;
 
     private User currentUser;
 
@@ -30,6 +34,10 @@ public class Controller {
     public PreLoginMenu preLoginMenu() {
         if (preLoginMenu == null) preLoginMenu = new PreLoginMenu();
         return preLoginMenu;
+    }
+    public DefaultAvatarMenu defaultAvatarMenu() {
+        if (defaultAvatarMenu == null) defaultAvatarMenu = new DefaultAvatarMenu();
+        return defaultAvatarMenu;
     }
 
     public ProfileMenu profileMenu() {
@@ -50,6 +58,10 @@ public class Controller {
     public ChangePasswordMenu changePasswordMenu() {
         if (changePasswordMenu == null) changePasswordMenu = new ChangePasswordMenu();
         return changePasswordMenu;
+    }
+    public AvatarMenu avatarMenu() {
+        if (avatarMenu == null) avatarMenu = new AvatarMenu();
+        return avatarMenu;
     }
 
     public void logout() {

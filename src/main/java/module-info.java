@@ -12,6 +12,8 @@ module aa {
     opens Model to com.google.gson;
     exports view.Login;
     opens view.Login to javafx.fxml;
+    exports view.ProfileMenu.Avatar;
+    opens view.ProfileMenu.Avatar to javafx.fxml;
     exports view.ProfileMenu;
     opens view.ProfileMenu to javafx.fxml;
 }

@@ -19,6 +19,7 @@ public class User {
     private static ArrayList<User> users;
     private String username = null;
     private String passwordHash = null;
+    private String avatar = null;
 
     static {
         users = new ArrayList<>();
@@ -27,6 +28,7 @@ public class User {
     private User(String username, String password) throws NoSuchAlgorithmException {
         this.username = username;
         this.passwordHash = makeHash.toSHA256(password);
+        this.avatar = "default/default0.jpg";
     }
 
     public static User makeUser(String username, String password) throws IOException, NoSuchAlgorithmException {
@@ -63,12 +65,12 @@ public class User {
         String username;
         do {
             randomUsername = new StringBuilder();
-            int size = GetRandom.getInt(2, 7);
+            int size = GetRandom.getInt(2, 8);
             for (int i = 0; i < size; i++) {
-                randomUsername.append((char) GetRandom.getInt('a', 'z'));
+                randomUsername.append((char) GetRandom.getInt('a', 'z'+1));
             }
             for (int i = size; i < 7; i++) {
-                randomUsername.append((char) GetRandom.getInt('1', '9'));
+                randomUsername.append((char) GetRandom.getInt('1', '9'+1));
             }
             username = "Guest_" + randomUsername.toString();
         } while (getUser(username) != null);
@@ -138,5 +140,13 @@ public class User {
 
     public void setUsername(String newUsername) {
         username = newUsername;
+    }
+
+    public String avatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

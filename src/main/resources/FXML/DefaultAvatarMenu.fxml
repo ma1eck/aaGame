@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" spacing="20" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="view.ProfileMenu.Avatar.DefaultAvatarMenu">
+    <children>
+        <HBox prefHeight="177.0" prefWidth="600.0" spacing="20">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="183.0" stroke="BLACK"
+                       strokeType="INSIDE" width="183.0" fx:id="rect1" onMouseClicked="#setRect1"/>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="183.0" stroke="BLACK"
+                       strokeType="INSIDE" width="183.0" fx:id="rect2" onMouseClicked="#setRect2"/>
+            <Label prefHeight="40.0" prefWidth="82.0" text="choose avatar"/>
+
+        </HBox>
+        <HBox prefHeight="164.0" prefWidth="600.0" spacing="20">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="183.0" stroke="BLACK"
+                       strokeType="INSIDE" width="183.0" fx:id="rect3" onMouseClicked="#setRect3"/>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="183.0" stroke="BLACK"
+                       strokeType="INSIDE" width="183.0" fx:id="rect4" onMouseClicked="#setRect4"/>
+            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="63.0" text="random" onMouseClicked="#random"/>
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="66.0" text="back" onMouseClicked="#back"/>
+        </HBox>
+    </children>
+</VBox>

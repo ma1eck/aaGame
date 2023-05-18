@@ -99,15 +99,26 @@ public class ProfileMenu extends Application {
     @FXML
     private VBox vBoxAvatar;
     @FXML
-    public void initialize() throws FileNotFoundException {
+    private void initialize(){
         usernameLabel.setText(main.controller().currentUser().getUsername());
-        URL url = ProfileMenu.class.getResource("/images/Avatars/default/default0.jpg");
-//        String address = url.toString().substring("file:/".length());
-//        System.out.println(address);
-        Image image = new Image(url.toExternalForm());
-        ImagePattern imagePattern = new ImagePattern(image);
-
+        ImagePattern imagePattern = getAvatar();
+        if (imagePattern==null) return;
         ((Rectangle)vBoxAvatar.getChildren().get(1)).setFill(imagePattern);
     }
 
+    private static ImagePattern getAvatar() {
+        try{
+            URL url = ProfileMenu.class.getResource("/images/Avatars/" + main.controller().currentUser().avatar());
+            Image image = new Image(url.toExternalForm());
+            ImagePattern imagePattern = new ImagePattern(image);
+            return imagePattern;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public void avatar(MouseEvent mouseEvent) throws Exception {
+        main.controller().avatarMenu().start(stage);
+    }
 }

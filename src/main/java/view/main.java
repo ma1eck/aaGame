@@ -2,8 +2,10 @@ package view;
 
 import Controller.Controller;
 import Model.User;
+import Utils.GetRandom;
 import view.Login.PreLoginMenu;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
