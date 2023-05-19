@@ -44,9 +44,10 @@ public class Game {
         };
     }
 
-    public void addABallWithAbsoluteAngle(int angle) {
+    public SmallBall addABallWithAngle(int angle) {
         SmallBall smallBall = new SmallBall(angle, smallBallsRadius, getPositionOfAAngle(angle));
         smallBalls.add(smallBall);
+        return smallBall;
     }
 
     public Circle getBigBall() {

@@ -17,12 +17,13 @@ public class GameMenu extends Application {
     private static Stage stage;
     private static GameController controller;
 
-    private static ArrayList<Transition> transitions;
+    private static ArrayList<Transition> transitions = new ArrayList<>();
+    private static Pane pane;
     @Override
     public void start(Stage stage) throws Exception {
         controller = new GameController();
         GameMenu.stage = stage;
-        Pane pane = new Pane();
+        pane = new Pane();
         pane.setPrefSize(400, 700);
 
         Circle bigBall = controller.getBigBall();
@@ -30,9 +31,22 @@ public class GameMenu extends Application {
         ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
         pane.getChildren().addAll(smallBalls);
         Scene scene = new Scene(pane);
-        transitions.add(new RotateAnimation(main.controller().currentGame(),smallBalls, controller.rotatingRate()));
-        transitions.get(0).play();
+        updateSmallBallsInTransition();
         stage.setScene(scene);
         stage.show();
+    }
+    public static void updateSmallBallsInTransition(){
+        ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
+        if (transitions.size() > 0) {
+            transitions.get(0).stop();
+            transitions.remove(0);
+        }
+        transitions.add(0,
+                new RotateAnimation(main.controller().currentGame(),smallBalls, controller.rotatingRate()));
+        transitions.get(0).play();
+    }
+
+    public static Pane pane() {
+        return pane;
     }
 }
