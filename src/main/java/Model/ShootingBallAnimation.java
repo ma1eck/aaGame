@@ -22,8 +22,8 @@ public class ShootingBallAnimation extends Transition {
 
     @Override
     protected void interpolate(double v) {
-        int x = (int) ball.getCenterX(),
-        y = (int) ball.getCenterY();
+        double x = ball.getCenterX(),
+        y =  ball.getCenterY();
 
         if (x < 0 || x > GameMenu.stageWidth ||
                 y < 0 || y > GameMenu.stageHeight){
@@ -36,7 +36,7 @@ public class ShootingBallAnimation extends Transition {
         }
         else {
             ball.setCenterY(y - ball.yVelocity());
-            ball.setCenterX(x - ball.xVelocity());
+            ball.setCenterX(x + ball.xVelocity());
         }
     }
 }

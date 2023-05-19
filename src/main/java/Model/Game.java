@@ -10,7 +10,7 @@ public class Game {
     public static final int bigBallRadius = 30;
     public static final int smallBallsRadius = 7;
     public static final int smallBallsDistanceFromCenter = 120;
-    public static final int shootingY = 600;
+    public static final int shootingY = 500;
     private GameSetting gameSetting;
     private ArrayList<Integer> mapBallsPositions;
     private ArrayList<SmallBall> smallBalls;
@@ -29,7 +29,7 @@ public class Game {
 
     private void setSmallBalls() {
         smallBalls = new ArrayList<>();
-        for (int angle : mapBallsPositions) {
+        for (double angle : mapBallsPositions) {
             SmallBall smallBall = new SmallBall(angle, smallBallsRadius, getPositionOfAAngle(angle));
             smallBalls.add(smallBall);
         }
@@ -44,7 +44,7 @@ public class Game {
         };
     }
 
-    public SmallBall addABallWithAngle(int angle) {
+    public SmallBall addABallWithAngle(double angle) {
         SmallBall smallBall = new SmallBall(angle, smallBallsRadius, getPositionOfAAngle(angle));
         smallBalls.add(smallBall);
         return smallBall;
@@ -72,18 +72,18 @@ public class Game {
         return gameSetting.difficulty().rotateSpeed();
     }
 
-    public double getAngleFromCoordinates(int x, int y) {
-        int angle;
-        int xDistance = x - bigBallCenterX;
-        int yDistance = -(y - bigBallCenterY);
-        angle = (int) Math.toDegrees(Math.atan2(xDistance,yDistance));
+    public double getAngleFromCoordinates(double x, double y) {
+        double angle;
+        double xDistance = x - bigBallCenterX;
+        double yDistance = -(y - bigBallCenterY);
+        angle =  Math.toDegrees(Math.atan2(xDistance,yDistance));
         angle = (angle+360)%360;
         return angle;
     }
-    public int getDistanceToCenter(int x, int y) {
-        int xDistance = x - bigBallCenterX;
-        int yDistance = y - bigBallCenterY;
-        return (int) Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
+    public double getDistanceToCenter(double x, double y) {
+        double xDistance = x - bigBallCenterX;
+        double yDistance = y - bigBallCenterY;
+        return Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
     }
 
     public int freezeTime() {

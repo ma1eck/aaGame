@@ -24,9 +24,11 @@ public class GameMenu extends Application {
     public static int stageHeight = 700;
     private static Stage stage;
     private static GameController controller;
+    private static int rotateRate;
 
     private static ArrayList<Transition> transitions = new ArrayList<>();
     private static Pane pane;
+    private static AnimationTimer animationTimer = null;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -38,9 +40,9 @@ public class GameMenu extends Application {
         pane.getChildren().add(bigBall);
         ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
         pane.getChildren().addAll(smallBalls);
-
         Scene scene = new Scene(pane);
         setKeyEvents(scene);
+        rotateRate = controller.rotatingRate();
         updateSmallBallsInTransition();
         stage.setScene(scene);
         stage.show();
@@ -64,7 +66,7 @@ public class GameMenu extends Application {
         int startingX = 200; // todo
         ShootingBall ball = controller.makeAShootingBall(angle, startingX);
         pane.getChildren().add(ball);
-        new ShootingBallAnimation(ball,pane,main.controller().currentGame()).play();
+        new ShootingBallAnimation(ball, pane, main.controller().currentGame()).play();
     }
 
     public static void updateSmallBallsInTransition() {
@@ -74,7 +76,7 @@ public class GameMenu extends Application {
             transitions.remove(0);
         }
         transitions.add(0,
-                new RotateAnimation(main.controller().currentGame(), smallBalls, controller.rotatingRate()));
+                new RotateAnimation(main.controller().currentGame(), smallBalls, rotateRate));
         transitions.get(0).play();
     }
 
@@ -84,11 +86,8 @@ public class GameMenu extends Application {
 
     public void freeze() {
         if (false || transitions.size() == 0) return; // todo : check something
-        transitions.get(0).stop();
-        ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
-        transitions.add(0,
-                new RotateAnimation(main.controller().currentGame(), smallBalls, 2));
-        transitions.get(0).play();
+        rotateRate = 2;
+        updateSmallBallsInTransition();
         returnToDefaultAfterFrozenDuration();
     }
 
@@ -96,11 +95,13 @@ public class GameMenu extends Application {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                rotateRate = controller.rotatingRate();
                 updateSmallBallsInTransition();
             }
         };
         final long startTime = System.nanoTime();
-        new AnimationTimer() {
+        if (animationTimer != null) animationTimer.stop();
+        animationTimer = new AnimationTimer() {
             @Override
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - startTime) / 1000000000;
@@ -109,7 +110,8 @@ public class GameMenu extends Application {
                     this.stop();
                 }
             }
-        }.start();
+        };
+        animationTimer.start();
     }
 
 }
