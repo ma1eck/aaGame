@@ -1,6 +1,7 @@
 package view;
 
 import Controller.Controller;
+import Model.GameMap;
 import Model.User;
 import view.Login.PreLoginMenu;
 
@@ -20,6 +21,7 @@ public class main {
     }
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException { //run this
+        GameMap.readMaps();
         User.readUsers();
         User.pureUsers();
         main.args = args;

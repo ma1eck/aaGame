@@ -1,10 +1,10 @@
 package view;
 
+import Controller.ControllerMainMenu;
 import Model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -16,8 +16,10 @@ import java.net.URL;
 
 public class MainMenu extends Application {
     private static Stage stage;
+    private static ControllerMainMenu controllerMainMenu;
 
     public void start(Stage stage) throws Exception {
+        controllerMainMenu = new ControllerMainMenu();
         MainMenu.stage = stage;
         stage.setTitle("aa");
         URL url = MainMenu.class.getResource("/FXML/MainMenu.fxml");
@@ -56,5 +58,10 @@ public class MainMenu extends Application {
 
     public void enterSetting(MouseEvent mouseEvent) throws Exception {
         main.controller().settingMenu().start(stage);
+    }
+
+    public void newGame(MouseEvent mouseEvent) throws Exception {
+        controllerMainMenu.newGame();
+        main.controller().gameMenu().start(stage);
     }
 }

@@ -1,6 +1,9 @@
 package Controller;
 
+import Model.Game;
 import Model.User;
+import javafx.application.Application;
+import view.GameMenu;
 import view.MainMenu;
 import view.Login.PreLoginMenu;
 import view.ProfileMenu.Avatar.AvatarMenu;
@@ -19,11 +22,13 @@ public class Controller {
     private ChangeUsernameMenu changeUsernameMenu = null;
     private ChangePasswordMenu changePasswordMenu = null;
     private DefaultAvatarMenu defaultAvatarMenu = null;
+    private GameMenu gameMenu = null;
     private SettingMenu settingMenu = null;
 
     private AvatarMenu avatarMenu = null;
 
     private User currentUser;
+    private Game currentGame;
 
     public User currentUser() {
         return currentUser;
@@ -31,6 +36,14 @@ public class Controller {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
+    }
+
+    public Game currentGame() {
+        return currentGame;
+    }
+
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
     }
 
     public PreLoginMenu preLoginMenu() {
@@ -69,6 +82,10 @@ public class Controller {
         if (settingMenu == null) settingMenu = new SettingMenu();
         return settingMenu;
     }
+    public GameMenu gameMenu() {
+        if (gameMenu == null) gameMenu = new GameMenu();
+        return gameMenu;
+    }
 
     public void logout() {
         currentUser = null;
@@ -80,4 +97,7 @@ public class Controller {
         currentUser = null;
         User.writeUsers();
     }
+
+
+
 }

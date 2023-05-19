@@ -194,4 +194,8 @@ public class User {
     public void setGrayScale(boolean grayScale) {
         isGrayScale = grayScale;
     }
+
+    public GameSetting gameSetting() {
+        return gameSetting;
+    }
 }

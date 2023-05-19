@@ -1,5 +1,8 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameSetting {
     private GameDifficulty difficulty;
     private int numberOfPlayableBalls;
@@ -7,7 +10,11 @@ public class GameSetting {
 
     public GameSetting() {
         difficulty = GameDifficulty.MEDIUM;
-        //map =  todo
+        if (GameMap.maps.size() != 0){
+            map = GameMap.maps.get(0);
+        }else {
+            GameMap.makeOne(new ArrayList<>(List.of(new Integer[]{75, 270})));
+        }
         numberOfPlayableBalls = 15;
     }
 
