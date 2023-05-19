@@ -14,6 +14,7 @@
         <VBox alignment="CENTER" spacing="20">
             <Label text="main menu"/>
             <Button text="profile menu" onMouseClicked="#enterProfileMenu"/>
+            <Button text="setting" onMouseClicked="#enterSetting"/>
             <Button text="exit game" onMouseClicked="#exitGame"/>
         </VBox>
     </center>

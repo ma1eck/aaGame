@@ -53,4 +53,8 @@ public class MainMenu extends Application {
                 JOptionPane.YES_NO_OPTION);
         return confirmation == 0;
     }
+
+    public void enterSetting(MouseEvent mouseEvent) throws Exception {
+        main.controller().settingMenu().start(stage);
+    }
 }

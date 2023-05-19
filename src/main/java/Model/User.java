@@ -3,12 +3,12 @@ package Model;
 import Controller.ControllerLoginMenu;
 import Utils.GetRandom;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import Utils.makeHash;
@@ -20,7 +20,10 @@ public class User {
     private String username = null;
     private String passwordHash = null;
     private String avatar = null;
-
+    private HashMap<GameDifficulty, Integer> score;
+    private GameSetting gameSetting;
+    private boolean isMute; // todo : dont play music when this is true
+    private boolean isGrayScale; // todo
     static {
         users = new ArrayList<>();
     }
@@ -29,6 +32,17 @@ public class User {
         this.username = username;
         this.passwordHash = makeHash.toSHA256(password);
         this.avatar = "default/default0.jpg";
+        gameSetting = new GameSetting();
+        initializeScore();
+        isMute = false;
+        isGrayScale = false;
+    }
+
+    private void initializeScore() {
+        score = new HashMap<>();
+        score.put(GameDifficulty.EASY,0);
+        score.put(GameDifficulty.MEDIUM,0);
+        score.put(GameDifficulty.HARD,0);
     }
 
     public static User makeUser(String username, String password) throws IOException, NoSuchAlgorithmException {
@@ -77,7 +91,7 @@ public class User {
     }
 
     public static void pureUsers() throws IOException { // delete Guests
-        for (int i=users.size()-1; i>=0 ; i--){
+        for (int i = users.size() - 1; i >= 0; i--) {
             if (users.get(i).isGuest()) users.remove(i);
         }
         writeUsers();
@@ -140,5 +154,44 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public GameDifficulty difficulty() {
+        return gameSetting.difficulty();
+    }
+
+    public void setDifficulty(GameDifficulty difficulty) {
+        gameSetting.setDifficulty(difficulty);
+    }
+    public int getScore(GameDifficulty difficulty){
+        return score.get(difficulty);
+    }
+    public void increaseScore(GameDifficulty difficulty, int amount){
+        int currentScore = getScore(difficulty);
+        score.replace(difficulty,currentScore+amount);
+    }
+
+    public int getPlayableBalls() {
+        return gameSetting.numberOfPlayableBalls();
+    }
+
+    public void setPlayableBalls(Integer number) {
+        gameSetting.setNumberOfPlayableBalls(number);
+    }
+
+    public boolean isMute() {
+        return isMute;
+    }
+
+    public void setMute(boolean mute) {
+        isMute = mute;
+    }
+
+    public boolean isGrayScale() {
+        return isGrayScale;
+    }
+
+    public void setGrayScale(boolean grayScale) {
+        isGrayScale = grayScale;
     }
 }

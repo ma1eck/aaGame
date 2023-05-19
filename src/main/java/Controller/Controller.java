@@ -8,6 +8,7 @@ import view.ProfileMenu.Avatar.DefaultAvatarMenu;
 import view.ProfileMenu.ChangePasswordMenu;
 import view.ProfileMenu.ChangeUsernameMenu;
 import view.ProfileMenu.ProfileMenu;
+import view.SettingMenu;
 
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ public class Controller {
     private ChangeUsernameMenu changeUsernameMenu = null;
     private ChangePasswordMenu changePasswordMenu = null;
     private DefaultAvatarMenu defaultAvatarMenu = null;
+    private SettingMenu settingMenu = null;
 
     private AvatarMenu avatarMenu = null;
 
@@ -62,6 +64,10 @@ public class Controller {
     public AvatarMenu avatarMenu() {
         if (avatarMenu == null) avatarMenu = new AvatarMenu();
         return avatarMenu;
+    }
+    public SettingMenu settingMenu() {
+        if (settingMenu == null) settingMenu = new SettingMenu();
+        return settingMenu;
     }
 
     public void logout() {

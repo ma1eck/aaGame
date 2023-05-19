@@ -34,7 +34,6 @@ public class PreLoginMenu extends Application {
         new LoginMenu().start(stage);
     }
     public void signup() throws Exception {
-        System.out.println("want to signup");
         new SignUpMenu().start(stage);
     }
     public void enterAsGuest() throws Exception {
