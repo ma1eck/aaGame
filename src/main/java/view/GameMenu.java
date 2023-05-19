@@ -2,6 +2,8 @@ package view;
 
 import Controller.GameController;
 import Model.RotateAnimation;
+import Model.ShootingBall;
+import Model.ShootingBallAnimation;
 import Model.SmallBall;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Transition;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 
 public class GameMenu extends Application {
+    public static int stageWidth = 400;
+    public static int stageHeight = 700;
     private static Stage stage;
     private static GameController controller;
 
@@ -29,25 +33,38 @@ public class GameMenu extends Application {
         controller = new GameController();
         GameMenu.stage = stage;
         pane = new Pane();
-        pane.setPrefSize(400, 700);
+        pane.setPrefSize(stageWidth, stageHeight);
         Circle bigBall = controller.getBigBall();
         pane.getChildren().add(bigBall);
         ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
         pane.getChildren().addAll(smallBalls);
 
         Scene scene = new Scene(pane);
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().equals(KeyCode.TAB)) {
-                    freeze();
-
-                }
-            }
-        });
+        setKeyEvents(scene);
         updateSmallBallsInTransition();
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void setKeyEvents(Scene scene) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.TAB))
+                    freeze();
+                else if (keyEvent.getCode().equals(KeyCode.SPACE))
+                    shootBall();
+
+            }
+        });
+    }
+
+    private void shootBall() {
+        double angle = 0;
+        int startingX = 200; // todo
+        ShootingBall ball = controller.makeAShootingBall(angle, startingX);
+        pane.getChildren().add(ball);
+        new ShootingBallAnimation(ball,pane,main.controller().currentGame()).play();
     }
 
     public static void updateSmallBallsInTransition() {

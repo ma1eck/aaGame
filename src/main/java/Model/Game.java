@@ -3,7 +3,6 @@ package Model;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Game {
     public static final int bigBallCenterX = 200;
@@ -11,6 +10,7 @@ public class Game {
     public static final int bigBallRadius = 30;
     public static final int smallBallsRadius = 7;
     public static final int smallBallsDistanceFromCenter = 120;
+    public static final int shootingY = 600;
     private GameSetting gameSetting;
     private ArrayList<Integer> mapBallsPositions;
     private ArrayList<SmallBall> smallBalls;
@@ -72,7 +72,7 @@ public class Game {
         return gameSetting.difficulty().rotateSpeed();
     }
 
-    public double getRelativeAngleFromCoordinates(int x, int y) {
+    public double getAngleFromCoordinates(int x, int y) {
         int angle;
         int xDistance = x - bigBallCenterX;
         int yDistance = -(y - bigBallCenterY);

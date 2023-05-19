@@ -1,8 +1,8 @@
 package Controller;
 
 import Model.Game;
+import Model.ShootingBall;
 import Model.SmallBall;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import view.GameMenu;
@@ -36,5 +36,17 @@ public class GameController {
 
     public int freezeTime() {
         return game.freezeTime();
+    }
+
+    public ShootingBall makeAShootingBall(double angle, int startingX) {
+        return new ShootingBall(angle, Game.smallBallsRadius, startingX, Game.shootingY);
+    }
+
+    public void hitShootingBall(ShootingBall ball) {
+        double angle = game.getAngleFromCoordinates((int) ball.getCenterX(), (int) ball.getCenterY());
+        double absoluteAngle = angle - game.currentAngle;
+        Pane pane = GameMenu.pane();
+        pane.getChildren().remove(ball);
+        setABallOnBigBall((int) absoluteAngle);
     }
 }
