@@ -1,17 +1,21 @@
 package view;
 
 import Controller.GameController;
-import Model.Game;
 import Model.RotateAnimation;
 import Model.SmallBall;
+import javafx.animation.AnimationTimer;
 import javafx.animation.Transition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.shape.*;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 public class GameMenu extends Application {
     private static Stage stage;
@@ -19,34 +23,76 @@ public class GameMenu extends Application {
 
     private static ArrayList<Transition> transitions = new ArrayList<>();
     private static Pane pane;
+
     @Override
     public void start(Stage stage) throws Exception {
         controller = new GameController();
         GameMenu.stage = stage;
         pane = new Pane();
         pane.setPrefSize(400, 700);
-
         Circle bigBall = controller.getBigBall();
         pane.getChildren().add(bigBall);
         ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
         pane.getChildren().addAll(smallBalls);
+
         Scene scene = new Scene(pane);
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode().equals(KeyCode.TAB)) {
+                    freeze();
+
+                }
+            }
+        });
         updateSmallBallsInTransition();
         stage.setScene(scene);
         stage.show();
     }
-    public static void updateSmallBallsInTransition(){
+
+    public static void updateSmallBallsInTransition() {
         ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
         if (transitions.size() > 0) {
             transitions.get(0).stop();
             transitions.remove(0);
         }
         transitions.add(0,
-                new RotateAnimation(main.controller().currentGame(),smallBalls, controller.rotatingRate()));
+                new RotateAnimation(main.controller().currentGame(), smallBalls, controller.rotatingRate()));
         transitions.get(0).play();
     }
 
     public static Pane pane() {
         return pane;
     }
+
+    public void freeze() {
+        if (false || transitions.size() == 0) return; // todo : check something
+        transitions.get(0).stop();
+        ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
+        transitions.add(0,
+                new RotateAnimation(main.controller().currentGame(), smallBalls, 2));
+        transitions.get(0).play();
+        returnToDefaultAfterFrozenDuration();
+    }
+
+    private static void returnToDefaultAfterFrozenDuration() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                updateSmallBallsInTransition();
+            }
+        };
+        final long startTime = System.nanoTime();
+        new AnimationTimer() {
+            @Override
+            public void handle(long currentNanoTime) {
+                double t = (currentNanoTime - startTime) / 1000000000;
+                if (t > controller.freezeTime()) {
+                    task.run();
+                    this.stop();
+                }
+            }
+        }.start();
+    }
+
 }

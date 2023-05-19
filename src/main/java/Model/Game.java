@@ -85,4 +85,8 @@ public class Game {
         int yDistance = y - bigBallCenterY;
         return (int) Math.sqrt((xDistance * xDistance) + (yDistance * yDistance));
     }
+
+    public int freezeTime() {
+        return gameSetting.difficulty().frozenTimer();
+    }
 }

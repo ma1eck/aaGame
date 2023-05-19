@@ -33,4 +33,8 @@ public class GameController {
         pane.getChildren().add(smallBall);
         GameMenu.updateSmallBallsInTransition();
     }
+
+    public int freezeTime() {
+        return game.freezeTime();
+    }
 }
