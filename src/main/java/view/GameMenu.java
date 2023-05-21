@@ -343,16 +343,28 @@ public class GameMenu extends Application {
     private static boolean currentVisibility = true;
 
     private static void startPhase3() {
-        Timeline makeBallsInvisibleAnimation = new Timeline(
-                new KeyFrame(Duration.millis(2000),
-                        actionEvent -> {
-                            for (SmallBall ball : controller.getSmallBalls()) {
-                                ball.setVisible(currentVisibility);
-                            }
-                            currentVisibility = !currentVisibility;
-                        }));
+        int invisibilityTime = controller.invisibilityTime();
+        int visibilityTime = 4;
+        Timeline makeBallsInvisibleAnimation = new Timeline(new KeyFrame(Duration.seconds
+                (invisibilityTime + visibilityTime),
+                actionEvent -> {
+                    for (SmallBall ball : controller.getSmallBalls()) {
+                        ball.setVisible(true);
+                    }
+                    Timeline makingInvisible = new Timeline(new KeyFrame(Duration.seconds
+                            (visibilityTime),
+                            actionEvent2 -> {
+                                for (SmallBall ball : controller.getSmallBalls()) {
+                                    ball.setVisible(false);
+                                }
+                            }));
+                    makingInvisible.setCycleCount(1);
+                    makingInvisible.play();
+                    animations.add(makingInvisible);
+                })
+        );
         makeBallsInvisibleAnimation.setCycleCount(-1);
-        makeBallsInvisibleAnimation.play();
+        makeBallsInvisibleAnimation.playFromStart();
         animations.add(makeBallsInvisibleAnimation);
     }
 

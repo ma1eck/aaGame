@@ -103,6 +103,9 @@ public class Game {
     public int timeBetweenChangingShootingAngle() {
         return gameSetting.difficulty().timeBetweenChangingShootingAngle();
     }
+    public int invisibilityTime() {
+        return gameSetting.difficulty().invisibilityDuration();
+    }
 
     public double getAngleFromCoordinates(double x, double y) {
         double angle;

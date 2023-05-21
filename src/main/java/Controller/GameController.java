@@ -97,6 +97,7 @@ public class GameController {
         return game.ballsToShoot();
     }
 
+
     public Integer getScore() {
         return game.score();
     }
@@ -140,5 +141,8 @@ public class GameController {
     }
     public int timeBetweenChangingShootingAngle() {
         return game.timeBetweenChangingShootingAngle();
+    }
+    public int invisibilityTime(){
+        return game.invisibilityTime();
     }
 }
