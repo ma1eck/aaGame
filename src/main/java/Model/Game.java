@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
@@ -11,12 +12,15 @@ public class Game {
     public static final int smallBallsRadius = 7;
     public static final int smallBallsDistanceFromCenter = 120;
     public static final int shootingY = 500;
+    public static final Color player1Color = Color.rgb(127,62,62);
     private GameSetting gameSetting;
     private ArrayList<Integer> mapBallsPositions;
     private ArrayList<SmallBall> smallBalls;
     private GameMap map;
     public double currentAngle; //todo
     private Circle bigBall = null;
+    private int ballsToShoot;
+    private int score = 0;
 
     public Game(GameSetting gameSetting) {
         map = gameSetting.map();
@@ -24,7 +28,7 @@ public class Game {
         this.currentAngle = 0;
         mapBallsPositions = map.ballsPosition;
         setSmallBalls();
-
+        ballsToShoot = gameSetting.numberOfPlayableBalls();
     }
 
     private void setSmallBalls() {
@@ -46,6 +50,11 @@ public class Game {
 
     public SmallBall addABallWithAngle(double angle) {
         SmallBall smallBall = new SmallBall(angle, smallBallsRadius, getPositionOfAAngle(angle));
+        smallBalls.add(smallBall);
+        return smallBall;
+    }
+    public SmallBall addABallWithAngle(double angle , Color color) {
+        SmallBall smallBall = new SmallBall(angle, smallBallsRadius, getPositionOfAAngle(angle), color);
         smallBalls.add(smallBall);
         return smallBall;
     }
@@ -88,5 +97,24 @@ public class Game {
 
     public int freezeTime() {
         return gameSetting.difficulty().frozenTimer();
+    }
+
+    public int ballsToShoot() {
+        return ballsToShoot;
+    }
+
+    public void decreaseBallsToShoot() {
+        ballsToShoot--;
+    }
+    public void increaseScore(){
+        score++;
+    }
+
+    public int score() {
+        return score;
+    }
+
+    public int numberOfPlayableBalls() {
+        return gameSetting.numberOfPlayableBalls();
     }
 }

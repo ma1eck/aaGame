@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class SmallBall extends Circle {
@@ -9,7 +10,12 @@ public class SmallBall extends Circle {
         this.relativeAngle = relativeAngle;
         this.setRadius(radius);
         this.setCenterX(coordinates[0]);
-        this.setCenterY(coordinates[1]);
+    }
+    public SmallBall(double relativeAngle, int radius, int[] coordinates, Color color) {
+        this.relativeAngle = relativeAngle;
+        this.setRadius(radius);
+        this.setCenterX(coordinates[0]);
+        this.setFill(color);
     }
 
     public void updateCoordinates(int[] coordinate ){

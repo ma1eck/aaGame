@@ -30,14 +30,12 @@ public class PreLoginMenu extends Application {
         stage.show();
     }
     public void login() throws Exception {
-        System.out.println("want to login");
         new LoginMenu().start(stage);
     }
     public void signup() throws Exception {
         new SignUpMenu().start(stage);
     }
     public void enterAsGuest() throws Exception {
-        System.out.println("want to enter as guest");
         loginMenuController.loginAsGuest();
         main.controller().mainMenu().start(stage);
     }
