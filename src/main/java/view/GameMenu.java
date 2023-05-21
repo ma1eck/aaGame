@@ -83,9 +83,8 @@ public class GameMenu extends Application {
 
         isGameOn = false;
         for (Animation animation : animations) {
-            if (!animation.getStatus().equals(STOPPED)) {
+            if (!animation.getStatus().equals(STOPPED))
                 animation.stop();
-            }
         }
         animations.clear();
 
@@ -298,5 +297,4 @@ public class GameMenu extends Application {
         reversingRotate.play();
         animations.add(reversingRotate);
     }
-
 }

@@ -32,8 +32,8 @@ public class GameController {
         if (pane == null) return;
         SmallBall smallBall = game.addABallWithAngle(angle, Game.player1Color);
         pane.getChildren().add(smallBall);
-        GameMenu.updateChangingBallsSizeAnimation();
         GameMenu.updateMainRotation();
+        GameMenu.updateChangingBallsSizeAnimation();
     }
 
     public int freezeTime() {
@@ -45,7 +45,10 @@ public class GameController {
     }
 
     public void hitShootingBall(ShootingBall ball) {
-        if (doesThisBallHitAnyBall(ball)) loseGame();
+        if (doesThisBallHitAnyBall(ball)) {
+            loseGame();
+            return;
+        }
         double angle = game.getAngleFromCoordinates((int) ball.getCenterX(), (int) ball.getCenterY());
         double absoluteAngle = angle - game.currentAngle;
         Pane pane = GameMenu.pane();
