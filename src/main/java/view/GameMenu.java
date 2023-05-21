@@ -40,7 +40,6 @@ public class GameMenu extends Application {
     private static Pane pane;
     private static AnimationTimer stopFreezeAnimationTimer = null; // to reset freeze
     private static long startingGameTime;
-    private static double shootingAngle;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -54,6 +53,7 @@ public class GameMenu extends Application {
         pane.setPrefSize(stageWidth, stageHeight);
         setInformationBarOnPane();
         setBallsOnPane();
+        showShootingBallAndPath();
         scene = new Scene(pane);
         setKeyEvents(scene);
         rotateRate = controller.rotatingRate();
@@ -62,12 +62,12 @@ public class GameMenu extends Application {
         stage.show();
     }
 
+
     private void setTimeLine() {
         timerTimeLine = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
             Long timePassed = (System.currentTimeMillis() - startingGameTime) / 1000;
             if (phase() != currentPhase) {
                 updatePhase();
-                System.out.println(currentPhase = phase()); // todo
             }
             showTimeOnScreen(timePassed);
         }));
@@ -79,14 +79,13 @@ public class GameMenu extends Application {
     private static void showTimeOnScreen(Long timePassed) {
         Integer second = (int) (timePassed % 60);
         Integer minute = (int) (timePassed / 60);
-        String minuteStr =   minute<10  ? ("0" + minute.toString()) : minute.toString();
-        String secondStr =   second<10  ? ("0" + second.toString()) : second.toString();
+        String minuteStr = minute < 10 ? ("0" + minute.toString()) : minute.toString();
+        String secondStr = second < 10 ? ("0" + second.toString()) : second.toString();
 
-        timeText.setText(minuteStr + ":"+ secondStr);
+        timeText.setText(minuteStr + ":" + secondStr);
     }
 
     public static void loseGame() {
-
         isGameOn = false;
         for (Animation animation : animations) {
             if (!animation.getStatus().equals(STOPPED))
@@ -164,6 +163,25 @@ public class GameMenu extends Application {
         pane.getChildren().addAll(smallBalls);
     }
 
+    private static Line pathLine;
+    private static Circle shootingBallInstance;
+
+    private static void showShootingBallAndPath() {
+        if (pathLine != null) pane.getChildren().remove(pathLine);
+        if (shootingBallInstance != null) pane.getChildren().remove(shootingBallInstance);
+        pathLine = makePathLine();
+        shootingBallInstance = controller.makeABall(controller.shootingX(), controller.shootingY());
+        pane.getChildren().add(pathLine);
+        pane.getChildren().add(shootingBallInstance);
+
+    }
+
+    private static Line makePathLine() {
+        return new Line(controller.shootingX(), controller.shootingY(),
+                controller.shootingX() + 100 * Math.sin(Math.toRadians(controller.shootingAngle()))
+                , controller.shootingY() - 100 * Math.cos(Math.toRadians(controller.shootingAngle())));
+    }
+
     private void setKeyEvents(Scene scene) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -172,14 +190,30 @@ public class GameMenu extends Application {
                     freeze();
                 else if (keyEvent.getCode().equals(KeyCode.SPACE))
                     shootBall();
+                else if ((keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.A)) &&
+                        phase() >= 4)
+                    shootingPosToLeft();
+                else if ((keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.D)) &&
+                        phase() >= 4)
+                    shootingPosToRight();
             }
         });
     }
 
+    private void shootingPosToRight() {
+        if (controller.shootingX() < stageWidth - 20 - 3) controller.changeShootingX(3);
+        showShootingBallAndPath();
+    }
+
+    private void shootingPosToLeft() {
+        if (controller.shootingX() > 20 + 3) controller.changeShootingX(-3);
+        showShootingBallAndPath();
+    }
+
     private void shootBall() {
         if (!isGameOn) return;
-        int startingX = 200; // todo
-        ShootingBall ball = controller.makeAShootingBall(shootingAngle, startingX);
+        int startingX = controller.shootingX(); // todo
+        ShootingBall ball = controller.makeAShootingBall(controller.shootingAngle(), startingX);
         pane.getChildren().add(ball);
         animations.add(new ShootingBallAnimation(ball, pane, main.controller().currentGame()));
         animations.get(animations.size() - 1).play();
@@ -223,8 +257,9 @@ public class GameMenu extends Application {
     }
 
     public static void startANewGame() {
+        pathLine = null;
+        shootingBallInstance = null;
         currentVisibility = true;
-        shootingAngle = 0;
         isGameOn = true;
         if (animations == null) animations = new ArrayList<>();
         else animations.clear();
@@ -251,7 +286,8 @@ public class GameMenu extends Application {
                 startPhase3();
                 break;
             case 4:
-                break; 
+                startPhase4();
+                break;
         }
     }
 
@@ -318,6 +354,20 @@ public class GameMenu extends Application {
         makeBallsInvisibleAnimation.setCycleCount(-1);
         makeBallsInvisibleAnimation.play();
         animations.add(makeBallsInvisibleAnimation);
+    }
+
+    private static void startPhase4() {
+        Timeline changingAngleAnimation = new Timeline(
+                new KeyFrame(Duration.millis(controller.timeBetweenChangingShootingAngle() * 1000),
+                        actionEvent -> {
+                            int newAngle = GetRandom.getInt(-25, 25);
+                            System.out.println(newAngle);
+                            controller.setAngle(newAngle);
+                            showShootingBallAndPath();
+                        }));
+        changingAngleAnimation.setCycleCount(-1);
+        changingAngleAnimation.play();
+        animations.add(changingAngleAnimation);
     }
 
 }

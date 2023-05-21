@@ -10,7 +10,7 @@ public class ShootingBallAnimation extends Transition {
     private ShootingBall ball;
     private Pane pane;
     private Game game;
-    private GameController controller = new GameController();
+    private GameController gameController = new GameController();
 
     public ShootingBallAnimation(ShootingBall ball, Pane pane, Game game) {
         this.ball = ball;
@@ -29,10 +29,11 @@ public class ShootingBallAnimation extends Transition {
                 y < 0 || y > GameMenu.stageHeight){
             this.stop();
             pane.getChildren().remove(ball);
+            gameController.loseGame();
         }
         else if (game.getDistanceToCenter(x,y) <= Game.smallBallsDistanceFromCenter){ // todo can be in controller
             this.stop();
-            controller.hitShootingBall(ball);
+            gameController.hitShootingBall(ball);
         }
         else {
             ball.setCenterY(y - ball.yVelocity());

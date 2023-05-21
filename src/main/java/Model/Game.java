@@ -12,15 +12,17 @@ public class Game {
     public static final int smallBallsRadius = 7;
     public static final int smallBallsDistanceFromCenter = 120;
     public static final int shootingY = 500;
-    public static final Color player1Color = Color.rgb(127,62,62);
+    public static final Color player1Color = Color.rgb(127, 62, 62);
     private GameSetting gameSetting;
     private ArrayList<Integer> mapBallsPositions;
     private ArrayList<SmallBall> smallBalls;
     private GameMap map;
-    public double currentAngle; //todo
+    public double currentAngle;
     private Circle bigBall = null;
     private int ballsToShoot;
     private int score = 0;
+    private double shootingAngle = 0;
+    private int shootingX = bigBallCenterX;
 
     public Game(GameSetting gameSetting) {
         map = gameSetting.map();
@@ -48,12 +50,29 @@ public class Game {
         };
     }
 
+    public double shootingAngle() {
+        return shootingAngle;
+    }
+
+    public void setShootingAngle(double shootingAngle) {
+        this.shootingAngle = shootingAngle;
+    }
+
+    public int shootingX() {
+        return shootingX;
+    }
+
+    public void changeShootingX(int amount) {
+        this.shootingX += amount;
+    }
+
     public SmallBall addABallWithAngle(double angle) {
         SmallBall smallBall = new SmallBall(angle, smallBallsRadius, getPositionOfAAngle(angle));
         smallBalls.add(smallBall);
         return smallBall;
     }
-    public SmallBall addABallWithAngle(double angle , Color color) {
+
+    public SmallBall addABallWithAngle(double angle, Color color) {
         SmallBall smallBall = new SmallBall(angle, smallBallsRadius, getPositionOfAAngle(angle), color);
         smallBalls.add(smallBall);
         return smallBall;
@@ -81,14 +100,19 @@ public class Game {
         return gameSetting.difficulty().rotateSpeed();
     }
 
+    public int timeBetweenChangingShootingAngle() {
+        return gameSetting.difficulty().timeBetweenChangingShootingAngle();
+    }
+
     public double getAngleFromCoordinates(double x, double y) {
         double angle;
         double xDistance = x - bigBallCenterX;
         double yDistance = -(y - bigBallCenterY);
-        angle =  Math.toDegrees(Math.atan2(xDistance,yDistance));
-        angle = (angle+360)%360;
+        angle = Math.toDegrees(Math.atan2(xDistance, yDistance));
+        angle = (angle + 360) % 360;
         return angle;
     }
+
     public double getDistanceToCenter(double x, double y) {
         double xDistance = x - bigBallCenterX;
         double yDistance = y - bigBallCenterY;
@@ -106,7 +130,8 @@ public class Game {
     public void decreaseBallsToShoot() {
         ballsToShoot--;
     }
-    public void increaseScore(){
+
+    public void increaseScore() {
         score++;
     }
 
@@ -117,4 +142,6 @@ public class Game {
     public int numberOfPlayableBalls() {
         return gameSetting.numberOfPlayableBalls();
     }
+
+
 }

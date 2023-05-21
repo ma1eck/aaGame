@@ -1,19 +1,19 @@
 package Model;
 
 public enum GameDifficulty {
-    EASY(5,1.2,7,"easy"),
-    MEDIUM(10,1.5,5,"medium"),
-    HARD(15,1.8,3,"hard")
+    EASY(5,6,7,"easy"),
+    MEDIUM(10,4,5,"medium"),
+    HARD(15,2,3,"hard")
 
     ;
     private int rotateSpeed;
-    private double windSpeed;
+    private int timeBetweenChangingShootingAngle;
     private int frozenTimer;
     private String name;
 
-    GameDifficulty(int rotateSpeed, double windSpeed, int frozenTimer,String name) {
+    GameDifficulty(int rotateSpeed, int timeBetweenChangingShootingAngle, int frozenTimer,String name) {
         this.rotateSpeed = rotateSpeed;
-        this.windSpeed = windSpeed;
+        this.timeBetweenChangingShootingAngle = timeBetweenChangingShootingAngle;
         this.frozenTimer = frozenTimer;
         this.name = name;
     }
@@ -22,8 +22,8 @@ public enum GameDifficulty {
         return rotateSpeed;
     }
 
-    public double windSpeed() {
-        return windSpeed;
+    public int timeBetweenChangingShootingAngle() {
+        return timeBetweenChangingShootingAngle;
     }
 
     public int frozenTimer() {

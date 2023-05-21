@@ -43,6 +43,10 @@ public class GameController {
     public ShootingBall makeAShootingBall(double angle, int startingX) {
         return new ShootingBall(angle, Game.smallBallsRadius, startingX, Game.shootingY, Game.player1Color);
     }
+    public Circle makeABall(int x, int y) {
+        Circle ball = new Circle(x, y, Game.smallBallsRadius, Game.player1Color);
+        return ball;
+    }
 
     public void hitShootingBall(ShootingBall ball) {
         if (doesThisBallHitAnyBall(ball)) {
@@ -61,11 +65,11 @@ public class GameController {
         if (getBallsToShootNumber() == 0) winGame();
     }
 
-    private void loseGame() {
+    public void loseGame() {
         GameMenu.loseGame();
     }
 
-    private void winGame() {
+    public void winGame() {
         GameMenu.winGame();
     }
 
@@ -114,5 +118,27 @@ public class GameController {
         ChangingBallsSizeAnimation changingBallsSizeAnimation =
                 new ChangingBallsSizeAnimation(game.smallBalls(), this);
         return changingBallsSizeAnimation;
+    }
+
+    public double shootingAngle() {
+        return game.shootingAngle();
+    }
+
+    public void setAngle(int newAngle) {
+        game.setShootingAngle(newAngle);
+    }
+
+    public int shootingX() {
+        return game.shootingX();
+    }
+    public void changeShootingX(int amount) {
+        game.changeShootingX(amount);
+    }
+
+    public int shootingY() {
+        return Game.shootingY;
+    }
+    public int timeBetweenChangingShootingAngle() {
+        return game.timeBetweenChangingShootingAngle();
     }
 }
