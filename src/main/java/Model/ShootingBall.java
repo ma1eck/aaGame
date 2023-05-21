@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class ShootingBall extends Circle {
-    public static final int speed = 3;
+    public static final int speed = 10;
     private double angle; // this is in degree
 
     public ShootingBall(double angle,int radius, int x, int y) {

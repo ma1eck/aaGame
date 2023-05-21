@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.GameController;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 
@@ -7,10 +8,12 @@ import java.util.ArrayList;
 
 public class ChangingBallsSizeAnimation extends Transition {
     private ArrayList<SmallBall> smallBalls;
-    public ChangingBallsSizeAnimation(ArrayList<SmallBall> smallBalls) {
+    private GameController controller;
+    public ChangingBallsSizeAnimation(ArrayList<SmallBall> smallBalls, GameController controller) {
         this.smallBalls = smallBalls;
         setCycleDuration(Duration.millis(2000));
         setCycleCount(-1);
+        this.controller = controller;
     }
 
     @Override
@@ -19,5 +22,6 @@ public class ChangingBallsSizeAnimation extends Transition {
         for (SmallBall smallBall : smallBalls) {
             smallBall.setRadius(currentSize);
         }
+        controller.checkBallsHitting();
     }
 }

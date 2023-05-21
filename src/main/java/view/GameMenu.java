@@ -40,6 +40,7 @@ public class GameMenu extends Application {
     private static Pane pane;
     private static AnimationTimer stopFreezeAnimationTimer = null; // to reset freeze
     private static long startingGameTime;
+    private static double shootingAngle;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -76,7 +77,12 @@ public class GameMenu extends Application {
     }
 
     private static void showTimeOnScreen(Long timePassed) {
-        timeText.setText(timePassed.toString());
+        Integer second = (int) (timePassed % 60);
+        Integer minute = (int) (timePassed / 60);
+        String minuteStr =   minute<10  ? ("0" + minute.toString()) : minute.toString();
+        String secondStr =   second<10  ? ("0" + second.toString()) : second.toString();
+
+        timeText.setText(minuteStr + ":"+ secondStr);
     }
 
     public static void loseGame() {
@@ -172,10 +178,8 @@ public class GameMenu extends Application {
 
     private void shootBall() {
         if (!isGameOn) return;
-
-        double angle = 0;
         int startingX = 200; // todo
-        ShootingBall ball = controller.makeAShootingBall(angle, startingX);
+        ShootingBall ball = controller.makeAShootingBall(shootingAngle, startingX);
         pane.getChildren().add(ball);
         animations.add(new ShootingBallAnimation(ball, pane, main.controller().currentGame()));
         animations.get(animations.size() - 1).play();
@@ -219,6 +223,8 @@ public class GameMenu extends Application {
     }
 
     public static void startANewGame() {
+        currentVisibility = true;
+        shootingAngle = 0;
         isGameOn = true;
         if (animations == null) animations = new ArrayList<>();
         else animations.clear();
@@ -242,16 +248,16 @@ public class GameMenu extends Application {
                 startPhase2();
                 break;
             case 3:
-                break; // todo
+                startPhase3();
+                break;
             case 4:
-                break; // todo
+                break; 
         }
     }
 
 
     private static void startPhase2() {
         reversingRotateTimeLine();
-        // todo change in balls size
         changingBallsSize();
     }
 
@@ -297,4 +303,21 @@ public class GameMenu extends Application {
         reversingRotate.play();
         animations.add(reversingRotate);
     }
+
+    private static boolean currentVisibility = true;
+
+    private static void startPhase3() {
+        Timeline makeBallsInvisibleAnimation = new Timeline(
+                new KeyFrame(Duration.millis(2000),
+                        actionEvent -> {
+                            for (SmallBall ball : controller.getSmallBalls()) {
+                                ball.setVisible(currentVisibility);
+                            }
+                            currentVisibility = !currentVisibility;
+                        }));
+        makeBallsInvisibleAnimation.setCycleCount(-1);
+        makeBallsInvisibleAnimation.play();
+        animations.add(makeBallsInvisibleAnimation);
+    }
+
 }

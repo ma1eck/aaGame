@@ -101,16 +101,18 @@ public class GameController {
         return game.numberOfPlayableBalls();
     }
 
-    public boolean areBallsHitting() {
+    public void checkBallsHitting() {
         for (Circle ball : game.smallBalls()) {
-            if (doesThisBallHitAnyBall(ball)) return true;
+            if (doesThisBallHitAnyBall(ball)) {
+                loseGame();
+                return;
+            }
         }
-        return false;
     }
 
     public ChangingBallsSizeAnimation changingBallsSizeAnimation() {
         ChangingBallsSizeAnimation changingBallsSizeAnimation =
-                new ChangingBallsSizeAnimation(game.smallBalls());
+                new ChangingBallsSizeAnimation(game.smallBalls(), this);
         return changingBallsSizeAnimation;
     }
 }
