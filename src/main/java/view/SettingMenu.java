@@ -9,19 +9,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.ArrayList;
-import java.util.Collection;
-
-import javafx.scene.control.Label;
 
 public class SettingMenu extends Application {
     private static Stage stage;
@@ -34,6 +28,7 @@ public class SettingMenu extends Application {
         stage.setTitle("aa");
         URL url = MainMenu.class.getResource("/FXML/SettingMenu.fxml");
         Pane pane = FXMLLoader.load(url);
+        main.controller().setGrayScaleBaseOnSetting(pane);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();

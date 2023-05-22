@@ -3,23 +3,25 @@ package view;
 import Controller.GameController;
 import Model.*;
 import Utils.GetRandom;
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.shape.*;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.net.URL;
 import java.util.ArrayList;
 
 import static javafx.animation.Animation.Status.STOPPED;
@@ -56,6 +58,7 @@ public class GameMenu extends Application {
         startingGameTime = System.currentTimeMillis();
         setTimeLine();
         pane.setPrefSize(stageWidth, stageHeight);
+        main.controller().setGrayScaleBaseOnSetting(pane);
         setInformationBarOnPane();
         setBallsOnPane();
         showShootingBallAndPath();
@@ -66,7 +69,6 @@ public class GameMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 
     private void setTimeLine() {
         timerTimeLine = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
@@ -90,43 +92,35 @@ public class GameMenu extends Application {
         timeText.setText(minuteStr + ":" + secondStr);
     }
 
-    public static void loseGame() {
+    private static void preEndGame() {
         isGameOn = false;
         for (Animation animation : animations) {
             if (!animation.getStatus().equals(STOPPED))
                 animation.stop();
         }
         animations.clear();
+    }
 
+    public static void loseGame() {
+        preEndGame();
         pane.getChildren().add(new Text(stageWidth / 2, stageHeight / 2, "You lost!"));
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                try {
-                    main.controller().mainMenu().start(stage);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        postEndGame();
 
     }
 
 
     public static void winGame() {
-        isGameOn = false;
-        for (Animation animation : animations) {
-            if (!animation.getStatus().equals(STOPPED)) {
-                animation.stop();
-            }
-        }
-        animations.clear();
-
+        preEndGame();
         pane.getChildren().add(new Text(stageWidth / 2, stageHeight / 2, "You won!"));
+        postEndGame();
+    }
+
+    private static void postEndGame() {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 try {
+                    controller.addUserScore();
                     main.controller().mainMenu().start(stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -139,7 +133,8 @@ public class GameMenu extends Application {
     public static void updateBallsToShootText(String ballsToShootNumber) {
         ballsToShootText.setText(ballsToShootNumber);
     }
-    public static void updateFreezeProgressBar(){
+
+    public static void updateFreezeProgressBar() {
         double progress = controller.getFreezeBarProgress();
         freezeProgressBar.setProgress(progress);
     }

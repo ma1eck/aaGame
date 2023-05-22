@@ -24,6 +24,7 @@ public class User {
     private GameSetting gameSetting;
     private boolean isMute; // todo : dont play music when this is true
     private boolean isGrayScale; // todo
+
     static {
         users = new ArrayList<>();
     }
@@ -40,9 +41,9 @@ public class User {
 
     private void initializeScore() {
         score = new HashMap<>();
-        score.put(GameDifficulty.EASY,0);
-        score.put(GameDifficulty.MEDIUM,0);
-        score.put(GameDifficulty.HARD,0);
+        score.put(GameDifficulty.EASY, 0);
+        score.put(GameDifficulty.MEDIUM, 0);
+        score.put(GameDifficulty.HARD, 0);
     }
 
     public static User makeUser(String username, String password) throws IOException, NoSuchAlgorithmException {
@@ -133,11 +134,15 @@ public class User {
         }
     }
 
-    public static void writeUsers() throws IOException {
-        Gson gson = new Gson();
-        FileWriter file = new FileWriter("src/main/java/DB/Users");
-        file.write(gson.toJson(users));
-        file.close();
+    public static void writeUsers() {
+        try {
+            Gson gson = new Gson();
+            FileWriter file = new FileWriter("src/main/java/DB/Users");
+            file.write(gson.toJson(users));
+            file.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
     public void setPassword(String password) throws NoSuchAlgorithmException {
@@ -163,12 +168,14 @@ public class User {
     public void setDifficulty(GameDifficulty difficulty) {
         gameSetting.setDifficulty(difficulty);
     }
-    public int getScore(GameDifficulty difficulty){
+
+    public int getScore(GameDifficulty difficulty) {
         return score.get(difficulty);
     }
-    public void increaseScore(GameDifficulty difficulty, int amount){
+
+    public void increaseScore(GameDifficulty difficulty, int amount) {
         int currentScore = getScore(difficulty);
-        score.replace(difficulty,currentScore+amount);
+        score.replace(difficulty, currentScore + amount);
     }
 
     public int getPlayableBalls() {

@@ -3,6 +3,8 @@ package Controller;
 import Model.Game;
 import Model.User;
 import javafx.application.Application;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.Pane;
 import view.GameMenu;
 import view.MainMenu;
 import view.Login.PreLoginMenu;
@@ -50,6 +52,7 @@ public class Controller {
         if (preLoginMenu == null) preLoginMenu = new PreLoginMenu();
         return preLoginMenu;
     }
+
     public DefaultAvatarMenu defaultAvatarMenu() {
         if (defaultAvatarMenu == null) defaultAvatarMenu = new DefaultAvatarMenu();
         return defaultAvatarMenu;
@@ -74,14 +77,17 @@ public class Controller {
         if (changePasswordMenu == null) changePasswordMenu = new ChangePasswordMenu();
         return changePasswordMenu;
     }
+
     public AvatarMenu avatarMenu() {
         if (avatarMenu == null) avatarMenu = new AvatarMenu();
         return avatarMenu;
     }
+
     public SettingMenu settingMenu() {
         if (settingMenu == null) settingMenu = new SettingMenu();
         return settingMenu;
     }
+
     public GameMenu gameMenu() {
         if (gameMenu == null) gameMenu = new GameMenu();
         return gameMenu;
@@ -91,13 +97,23 @@ public class Controller {
         currentUser = null;
     }
 
-    public void removeCurrentUser() throws IOException {
-        if (currentUser==null) return;
+    public void removeCurrentUser() {
+        if (currentUser == null) return;
         User.remove(currentUser);
         currentUser = null;
         User.writeUsers();
     }
 
+    public void setGrayScaleBaseOnSetting(Pane pane) {
+        if (currentUser == null || pane == null) return;
+        if (currentUser.isGrayScale()) {
+            ColorAdjust grayScale = new ColorAdjust();
+            grayScale.setSaturation(-1.0);
+            pane.setEffect(grayScale);
+        } else {
+            pane.setEffect(null);
+        }
+    }
 
 
 }

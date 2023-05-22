@@ -23,6 +23,7 @@ public class SignUpMenu extends Application {
         SignUpMenu.stage = stage;
         URL url = SignUpMenu.class.getResource("/FXML/SignUpMenu.fxml");
         BorderPane borderPane = FXMLLoader.load(url);
+        main.controller().setGrayScaleBaseOnSetting(borderPane);
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();

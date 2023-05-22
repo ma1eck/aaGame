@@ -24,6 +24,7 @@ public class LoginMenu extends Application {
         LoginMenu.stage = stage;
         URL url = LoginMenu.class.getResource("/FXML/loginMenu.fxml");
         BorderPane borderPane = FXMLLoader.load(url);
+        main.controller().setGrayScaleBaseOnSetting(borderPane);
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();

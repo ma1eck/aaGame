@@ -64,6 +64,7 @@ public class Game {
         return shootingX;
     }
 
+
     public void changeShootingX(int amount) {
         this.shootingX += amount;
     }
@@ -100,6 +101,9 @@ public class Game {
 
     public int rotatingRate() {
         return gameSetting.difficulty().rotateSpeed();
+    }
+    public GameDifficulty difficulty() {
+        return gameSetting.difficulty();
     }
 
     public int timeBetweenChangingShootingAngle() {

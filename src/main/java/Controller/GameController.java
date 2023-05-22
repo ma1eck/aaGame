@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.ChangingBallsSizeAnimation;
-import Model.Game;
-import Model.ShootingBall;
-import Model.SmallBall;
+import Model.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import view.GameMenu;
@@ -156,5 +153,11 @@ public class GameController {
     }
     public void setNumberOFBallsShotFromPreviousFreeze0(){
         game.setNumberOFBallsShotFromPreviousFreeze0();
+    }
+
+    public void addUserScore() {
+        User currentUser = main.controller().currentUser();
+        currentUser.increaseScore(game.difficulty(), game.score());
+        User.writeUsers();
     }
 }
