@@ -6,33 +6,23 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.SettingMenu">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SettingMenu">
     <children>
-        <ChoiceBox fx:id="difficultyChoiceBox" layoutX="308.0" layoutY="60.0" prefWidth="150.0"
-                   onAction="#setDifficulty"/>
-        <Label layoutX="491.0" layoutY="64.0" prefHeight="14.0" prefWidth="56.0" text="difficulty"/>
-        <ChoiceBox fx:id="playableBallsChoiceBox" layoutX="308.0" layoutY="110.0" prefWidth="150.0"
-                   onAction="#setPlayableBalls"/>
-        <Label layoutX="477.0" layoutY="114.0" prefHeight="17.0" prefWidth="78.0" text="playable balls"/>
-        <Button layoutX="308.0" layoutY="153.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="249.0"
-                text="choose game map"/>
-        <CheckBox fx:id="muteCheckbox" layoutX="469.0" layoutY="195.0" mnemonicParsing="false" prefHeight="17.0"
-                  prefWidth="78.0" text="mute" onAction="#setMute"/>
-        <CheckBox fx:id="grayScaleCheckBox" layoutX="330.0" layoutY="195.0" mnemonicParsing="false" prefHeight="17.0"
-                  prefWidth="103.0" text="gray scale" onAction="#setGrayScale"/>
-        <ChoiceBox fx:id="languageChoiceBox" layoutX="307.0" layoutY="237.0" prefWidth="150.0"/>
-        <Label layoutX="480.0" layoutY="241.0" prefHeight="17.0" prefWidth="78.0" text="language"/>
-        <Button layoutX="308.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="249.0"
-                text="change controller keys"/>
-        <Button layoutX="407.0" layoutY="343.0" mnemonicParsing="false" onMouseClicked="#back" text="back"/>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="14.0" prefHeight="17.0"
-               prefWidth="125.0" text="current chooses"/>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="64.0" prefHeight="17.0"
-               prefWidth="125.0" text="label" fx:id="difficultyLabel"/>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="114.0" prefHeight="17.0"
-               prefWidth="125.0" text="label" fx:id="playableBallsLabel"/>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="241.0" prefHeight="17.0"
-               prefWidth="125.0" text="label" fx:id="languageLabel"/>
+        <ChoiceBox fx:id="difficultyChoiceBox" layoutX="308.0" layoutY="60.0" onAction="#setDifficulty" prefWidth="150.0" />
+        <Label layoutX="491.0" layoutY="64.0" prefHeight="14.0" prefWidth="56.0" text="difficulty" />
+        <ChoiceBox fx:id="playableBallsChoiceBox" layoutX="308.0" layoutY="110.0" onAction="#setPlayableBalls" prefWidth="150.0" />
+        <Label layoutX="477.0" layoutY="114.0" prefHeight="17.0" prefWidth="78.0" text="playable balls" />
+        <CheckBox fx:id="muteCheckbox" layoutX="469.0" layoutY="195.0" mnemonicParsing="false" onAction="#setMute" prefHeight="17.0" prefWidth="78.0" text="mute" />
+        <CheckBox fx:id="grayScaleCheckBox" layoutX="330.0" layoutY="195.0" mnemonicParsing="false" onAction="#setGrayScale" prefHeight="17.0" prefWidth="103.0" text="gray scale" />
+        <ChoiceBox fx:id="languageChoiceBox" layoutX="307.0" layoutY="237.0" prefWidth="150.0" />
+        <Label layoutX="480.0" layoutY="241.0" prefHeight="17.0" prefWidth="78.0" text="language" />
+        <Button layoutX="308.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="249.0" text="change controller keys" />
+        <Button layoutX="407.0" layoutY="343.0" mnemonicParsing="false" onMouseClicked="#back" text="back" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="14.0" prefHeight="17.0" prefWidth="125.0" text="current chooses" />
+        <Label fx:id="difficultyLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="64.0" prefHeight="17.0" prefWidth="125.0" text="label" />
+        <Label fx:id="playableBallsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="114.0" prefHeight="17.0" prefWidth="125.0" text="label" />
+        <Label fx:id="languageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="241.0" prefHeight="17.0" prefWidth="125.0" text="label" />
+      <ChoiceBox fx:id="gameMapChoiceBox" layoutX="307.0" layoutY="158.0" onAction="#setGameMap" prefWidth="150.0" />
+      <Label layoutX="477.0" layoutY="162.0" prefHeight="17.0" prefWidth="78.0" text="game map" />
     </children>
 </AnchorPane>

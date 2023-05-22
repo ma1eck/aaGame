@@ -2,6 +2,7 @@ package view;
 
 import Controller.ControllerSetting;
 import Model.GameDifficulty;
+import Model.GameMap;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,6 +40,8 @@ public class SettingMenu extends Application {
     @FXML
     private ChoiceBox<Integer> playableBallsChoiceBox;
     @FXML
+    private ChoiceBox<Integer> gameMapChoiceBox;
+    @FXML
     private ChoiceBox<String> languageChoiceBox; // todo
     @FXML
     private Label languageLabel;
@@ -56,15 +59,23 @@ public class SettingMenu extends Application {
         difficultyChoiceBox.getItems().clear();
         playableBallsChoiceBox.getItems().clear();
         languageChoiceBox.getItems().clear();
+        gameMapChoiceBox.getItems().clear();
         difficultyChoiceBox.getItems().addAll(GameDifficulty.values());
         difficultyLabel.setText(controller.getDifficulty().toString());
         setPlayableBallsChoiceBox();
+        setGameMapChoiceBox();
         setLanguageChoiceBox();
         languageLabel.setText("English");
         playableBallsLabel.setText(controller.getPlayableBalls().toString());
         muteCheckbox.setSelected(controller.isMute());
         grayScaleCheckBox.setSelected(controller.isGrayScale());
 
+    }
+
+    private void setGameMapChoiceBox() {
+        ArrayList<Integer> mapIndexes = new ArrayList<>();
+        for (int i = 1; i < GameMap.maps.size()+1; i++) mapIndexes.add(i);
+        gameMapChoiceBox.getItems().addAll(mapIndexes);
     }
 
     private void setLanguageChoiceBox() {
@@ -100,5 +111,9 @@ public class SettingMenu extends Application {
 
     public void setGrayScale(ActionEvent actionEvent) {
         controller.setGrayScale(grayScaleCheckBox.isSelected());
+    }
+
+    public void setGameMap() {
+        controller.setGameMap(gameMapChoiceBox.getValue()-1);
     }
 }

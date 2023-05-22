@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import Utils.makeHash;
@@ -105,7 +106,6 @@ public class User {
     }
 
     private static String makeARandomUsername() {
-        StringBuilder randomUsername;
         String username;
         do {
             username = "Guest_" + GetRandom.getString(7);
@@ -142,6 +142,9 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+    public void setMapByIndex(int index){
+        gameSetting.setMap(GameMap.maps.get(index));
     }
 
     public static void readUsers() throws IOException {

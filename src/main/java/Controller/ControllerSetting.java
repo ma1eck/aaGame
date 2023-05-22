@@ -39,4 +39,8 @@ public class ControllerSetting {
     public boolean isGrayScale() {
         return main.controller().currentUser().isGrayScale();
     }
+
+    public void setGameMap(int index) {
+        main.controller().currentUser().setMapByIndex(index);
+    }
 }
