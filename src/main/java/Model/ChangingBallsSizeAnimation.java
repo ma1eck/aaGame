@@ -22,6 +22,6 @@ public class ChangingBallsSizeAnimation extends Transition {
         for (SmallBall smallBall : smallBalls) {
             smallBall.setRadius(currentSize);
         }
-        controller.checkBallsHitting();
+        if (!controller.checkBallsHitting()) this.stop();
     }
 }

@@ -13,6 +13,7 @@ public class Game {
     public static final int smallBallsDistanceFromCenter = 120;
     public static final int shootingY = 500;
     public static final Color player1Color = Color.rgb(127, 62, 62);
+    public static int ballsToShootBeforeFreezing = 5;
     private GameSetting gameSetting;
     private ArrayList<Integer> mapBallsPositions;
     private ArrayList<SmallBall> smallBalls;
@@ -23,6 +24,7 @@ public class Game {
     private int score = 0;
     private double shootingAngle = 0;
     private int shootingX = bigBallCenterX;
+    private int numberOFBallsShotFromPreviousFreeze = 0;
 
     public Game(GameSetting gameSetting) {
         map = gameSetting.map();
@@ -147,4 +149,13 @@ public class Game {
     }
 
 
+    public int numberOFBallsShotFromPreviousFreeze() {
+        return numberOFBallsShotFromPreviousFreeze;
+    }
+    public void setNumberOFBallsShotFromPreviousFreeze0 (){
+        numberOFBallsShotFromPreviousFreeze = 0;
+    }
+    public void increaseNumberOFBallsShotFromPreviousFreeze (){
+        numberOFBallsShotFromPreviousFreeze++;
+    }
 }

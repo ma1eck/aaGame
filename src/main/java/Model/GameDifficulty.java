@@ -1,9 +1,9 @@
 package Model;
 
 public enum GameDifficulty {
-    EASY(5, 6, 7, 2 , "easy"),
-    MEDIUM(10, 4, 5,3, "medium"),
-    HARD(15, 2, 3,5, "hard");
+    EASY(5, 6, 7, 1 , "easy"),
+    MEDIUM(10, 4, 5,2, "medium"),
+    HARD(15, 2, 3,3, "hard");
     private int rotateSpeed;
     private int timeBetweenChangingShootingAngle;
     private int frozenTimer;

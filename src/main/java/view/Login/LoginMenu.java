@@ -59,7 +59,6 @@ public class LoginMenu extends Application {
                 alertPassword.showAndWait();
                 return;
             case SUCCESSFUL:
-                System.out.println("logged in");
                 main.controller().mainMenu().start(stage);
                 return;
         }

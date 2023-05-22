@@ -11,6 +11,8 @@ import view.main;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.min;
+
 public class GameController {
 
     private Game game = main.controller().currentGame();
@@ -62,6 +64,8 @@ public class GameController {
         game.increaseScore();
         GameMenu.updateBallsToShootText(getBallsToShootNumber().toString());
         GameMenu.updateScoreText(getScore().toString());
+        game.increaseNumberOFBallsShotFromPreviousFreeze();
+        GameMenu.updateFreezeProgressBar();
         if (getBallsToShootNumber() == 0) winGame();
     }
 
@@ -106,13 +110,14 @@ public class GameController {
         return game.numberOfPlayableBalls();
     }
 
-    public void checkBallsHitting() {
+    public boolean checkBallsHitting() {
         for (Circle ball : game.smallBalls()) {
             if (doesThisBallHitAnyBall(ball)) {
                 loseGame();
-                return;
+                return false;
             }
         }
+        return true;
     }
 
     public ChangingBallsSizeAnimation changingBallsSizeAnimation() {
@@ -144,5 +149,12 @@ public class GameController {
     }
     public int invisibilityTime(){
         return game.invisibilityTime();
+    }
+
+    public double getFreezeBarProgress() {
+        return  min((double) game.numberOFBallsShotFromPreviousFreeze() / Game.ballsToShootBeforeFreezing, 1);
+    }
+    public void setNumberOFBallsShotFromPreviousFreeze0(){
+        game.setNumberOFBallsShotFromPreviousFreeze0();
     }
 }

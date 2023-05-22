@@ -79,7 +79,6 @@ public class SignUpMenu extends Application {
                 alert.showAndWait();
                 return;
             case SUCCESSFUL:
-                System.out.println("signed up");
                 main.controller().mainMenu().start(stage);
                 return;
         }

@@ -7,8 +7,10 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -16,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 
+import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 import static javafx.animation.Animation.Status.STOPPED;
@@ -34,6 +38,7 @@ public class GameMenu extends Application {
     private static Text ballsToShootText;
     private static Text scoreText;
     private static Text timeText;
+    private static ProgressBar freezeProgressBar;
     private static ArrayList<Animation> animations = new ArrayList<>();
     private static RotateAnimation rotateAnimation = null;
     private static Timeline timerTimeLine;
@@ -134,6 +139,10 @@ public class GameMenu extends Application {
     public static void updateBallsToShootText(String ballsToShootNumber) {
         ballsToShootText.setText(ballsToShootNumber);
     }
+    public static void updateFreezeProgressBar(){
+        double progress = controller.getFreezeBarProgress();
+        freezeProgressBar.setProgress(progress);
+    }
 
     public static void updateScoreText(String score) {
         scoreText.setText(score);
@@ -152,6 +161,10 @@ public class GameMenu extends Application {
         timeText = new Text();
         showTimeOnScreen(0L);
         informationBar.getChildren().add(timeText);
+        freezeProgressBar = new ProgressBar(1);
+        freezeProgressBar.setStyle("-fx-accent: #2f0254; ");
+        updateFreezeProgressBar();
+        informationBar.getChildren().add(freezeProgressBar);
 
         pane.getChildren().add(informationBar);
     }
@@ -237,10 +250,12 @@ public class GameMenu extends Application {
     }
 
     public void freeze() {
-        if (false || animations.size() == 0) return; // todo : check something
+        if (freezeProgressBar.getProgress() < 1 || animations.size() == 0) return;
         rotateRate = 2;
         updateMainRotation();
         returnToDefaultAfterFrozenDuration();
+        controller.setNumberOFBallsShotFromPreviousFreeze0();
+        updateFreezeProgressBar();
     }
 
     private static void returnToDefaultAfterFrozenDuration() {
@@ -324,7 +339,6 @@ public class GameMenu extends Application {
         int maxTimeSpending = 7;
         lastRevers = System.currentTimeMillis();
         nextReversTime = GetRandom.getInt(minTimeSpending, maxTimeSpending);
-        System.out.println(nextReversTime);
         Timeline reversingRotate = new Timeline(new KeyFrame(Duration.millis(300), actionEvent -> {
             Long timePassed = (System.currentTimeMillis() - lastRevers) / 1000;
             if (timePassed > nextReversTime) {
@@ -332,7 +346,6 @@ public class GameMenu extends Application {
                 updateMainRotation();
                 lastRevers = System.currentTimeMillis();
                 nextReversTime = GetRandom.getInt(minTimeSpending, maxTimeSpending);
-                System.out.println(nextReversTime);
             }
         }));
         reversingRotate.setCycleCount(-1);
@@ -344,7 +357,7 @@ public class GameMenu extends Application {
 
     private static void startPhase3() {
         int invisibilityTime = controller.invisibilityTime();
-        int visibilityTime = 4;
+        int visibilityTime = 3;
         Timeline makeBallsInvisibleAnimation = new Timeline(new KeyFrame(Duration.seconds
                 (invisibilityTime + visibilityTime),
                 actionEvent -> {
@@ -373,7 +386,6 @@ public class GameMenu extends Application {
                 new KeyFrame(Duration.millis(controller.timeBetweenChangingShootingAngle() * 1000),
                         actionEvent -> {
                             int newAngle = GetRandom.getInt(-25, 25);
-                            System.out.println(newAngle);
                             controller.setAngle(newAngle);
                             showShootingBallAndPath();
                         }));
