@@ -28,6 +28,7 @@ public class AvatarMenu extends Application {
         stage.setTitle("aa");
         URL url = MainMenu.class.getResource("/FXML/AvatarMenu.fxml");
         BorderPane pane = FXMLLoader.load(url);
+        main.controller().setGrayScaleBaseOnSetting(pane);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
@@ -39,24 +40,26 @@ public class AvatarMenu extends Application {
 
     public void avatarFromDevice(MouseEvent mouseEvent) throws Exception {
         File file = getFileFromDevice();
-        File destination = saveChosenAvatarToImages(file);
-        controllerAvatar.setAvatar(destination.getName());
+        if (file != null) {
+            File destination = saveChosenAvatarToImages(file);
+            controllerAvatar.setAvatar(destination.getName());
+        }
         back();
     }
 
     private File saveChosenAvatarToImages(File file) throws IOException {
         File destination;
         do {
-             destination = new File(AvatarMenu.class.getResource("/images/Avatars").toString().substring("file:/".length())
-                     + "/"+ GetRandom.getString(10) +"_"+ file.getName());
-        }while(destination.exists());
-        Files.copy(file.toPath(),destination.toPath());
+            destination = new File(AvatarMenu.class.getResource("/images/Avatars").toString().substring("file:/".length())
+                    + "/" + GetRandom.getString(10) + "_" + file.getName());
+        } while (destination.exists());
+        Files.copy(file.toPath(), destination.toPath());
         return destination;
     }
 
     private File getFileFromDevice() {
         JFileChooser jfc = new JFileChooser();
-        jfc.showDialog(null,"Please Select the File");
+        jfc.showDialog(null, "Please Select the File");
         jfc.setVisible(true);
         File file = jfc.getSelectedFile();
         return file;

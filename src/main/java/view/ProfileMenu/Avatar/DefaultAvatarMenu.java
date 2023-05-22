@@ -29,6 +29,7 @@ public class DefaultAvatarMenu extends Application {
         stage.setTitle("aa");
         URL url = MainMenu.class.getResource("/FXML/DefaultAvatarMenu.fxml"); // there should be exactly 4 avatar
         VBox pane = FXMLLoader.load(url);
+        main.controller().setGrayScaleBaseOnSetting(pane);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();

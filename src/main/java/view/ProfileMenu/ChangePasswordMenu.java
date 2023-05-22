@@ -26,6 +26,7 @@ public class ChangePasswordMenu extends Application {
         stage.setTitle("aa");
         URL url = MainMenu.class.getResource("/FXML/ChangePasswordMenu.fxml");
         BorderPane pane = FXMLLoader.load(url);
+        main.controller().setGrayScaleBaseOnSetting(pane);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
