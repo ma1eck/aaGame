@@ -15,6 +15,7 @@
             <Label text="main menu"/>
             <Button text="profile menu" onMouseClicked="#enterProfileMenu"/>
             <Button text="setting" onMouseClicked="#enterSetting"/>
+            <Button text="scoreboard" onMouseClicked="#enterScoreboard"/>
             <Button text="new game" onMouseClicked="#newGame"/>
             <Button text="exit game" onMouseClicked="#exitGame"/>
         </VBox>

@@ -77,10 +77,24 @@ public class GameMenu extends Application {
                 updatePhase();
             }
             showTimeOnScreen(timePassed);
+            getTimePassedFromLabel();
         }));
         timerTimeLine.setCycleCount(-1);
         timerTimeLine.play();
         animations.add(timerTimeLine);
+    }
+
+    public static Integer getTimePassedFromLabel() {
+        String minStr = timeText.getText().substring(0, 2);
+        String secStr = timeText.getText().substring(3, 5);
+        try {
+            Integer timePassed = Integer.parseInt(minStr) * 60 + Integer.parseInt(secStr);
+            System.out.println(timePassed);
+            return timePassed;
+        }catch (NumberFormatException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     private static void showTimeOnScreen(Long timePassed) {
@@ -123,6 +137,7 @@ public class GameMenu extends Application {
             public void handle(KeyEvent keyEvent) {
                 try {
                     controller.addUserScore();
+                    controller.addUserTimeSpent();
                     main.controller().mainMenu().start(stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);

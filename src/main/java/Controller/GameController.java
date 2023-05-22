@@ -6,6 +6,7 @@ import javafx.scene.shape.Circle;
 import view.GameMenu;
 import view.main;
 
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 
 import static java.lang.Math.min;
@@ -158,6 +159,13 @@ public class GameController {
     public void addUserScore() {
         User currentUser = main.controller().currentUser();
         currentUser.increaseScore(game.difficulty(), game.score());
+        User.writeUsers();
+    }
+    public void addUserTimeSpent() {
+        User currentUser = main.controller().currentUser();
+        Integer timePassed =  GameMenu.getTimePassedFromLabel();
+        if (timePassed == null) return;
+        currentUser.increaseTimeSpent(game.difficulty(), GameMenu.getTimePassedFromLabel());
         User.writeUsers();
     }
 }

@@ -21,6 +21,7 @@ public class User {
     private String passwordHash = null;
     private String avatar = null;
     private HashMap<GameDifficulty, Integer> score;
+    private HashMap<GameDifficulty, Long> timeSpent;
     private GameSetting gameSetting;
     private boolean isMute; // todo : dont play music when this is true
     private boolean isGrayScale; // todo
@@ -35,8 +36,30 @@ public class User {
         this.avatar = "default/default0.jpg";
         gameSetting = new GameSetting();
         initializeScore();
+        initializeTimeSpent();
         isMute = false;
         isGrayScale = false;
+    }
+
+    public static ArrayList<User> getTop10Players(GameDifficulty difficulty) {
+        ArrayList<User> topPlayers = new ArrayList<>();
+        for (int i=0; i<10; i++){
+            int maxScore = 0;
+            double timeMin = Double.POSITIVE_INFINITY;
+            User bestUser = null;
+            for (User user : users){
+                if (topPlayers.contains(user)) continue;
+                int score = user.getScore(difficulty);
+                long timeSpent = user.getTimeSpent(difficulty);
+                if (score > maxScore ||(score == maxScore && timeSpent <= timeMin) ){
+                    bestUser = user;
+                    maxScore = score;
+                    timeMin = timeSpent;
+                }
+            }
+            if (bestUser!=null) topPlayers.add(bestUser);
+        }
+        return topPlayers;
     }
 
     private void initializeScore() {
@@ -44,6 +67,12 @@ public class User {
         score.put(GameDifficulty.EASY, 0);
         score.put(GameDifficulty.MEDIUM, 0);
         score.put(GameDifficulty.HARD, 0);
+    }
+    private void initializeTimeSpent() {
+        timeSpent = new HashMap<>();
+        timeSpent.put(GameDifficulty.EASY, 0L);
+        timeSpent.put(GameDifficulty.MEDIUM, 0L);
+        timeSpent.put(GameDifficulty.HARD, 0L);
     }
 
     public static User makeUser(String username, String password) throws IOException, NoSuchAlgorithmException {
@@ -172,10 +201,17 @@ public class User {
     public int getScore(GameDifficulty difficulty) {
         return score.get(difficulty);
     }
+    public Long getTimeSpent(GameDifficulty difficulty) {
+        return timeSpent.get(difficulty);
+    }
 
     public void increaseScore(GameDifficulty difficulty, int amount) {
         int currentScore = getScore(difficulty);
         score.replace(difficulty, currentScore + amount);
+    }
+    public void increaseTimeSpent(GameDifficulty difficulty, int amount) {
+        Long currentTimeSpent = getTimeSpent(difficulty);
+        timeSpent.replace(difficulty, currentTimeSpent + amount);
     }
 
     public int getPlayableBalls() {

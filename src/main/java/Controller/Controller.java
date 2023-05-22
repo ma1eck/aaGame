@@ -2,20 +2,18 @@ package Controller;
 
 import Model.Game;
 import Model.User;
-import javafx.application.Application;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
 import view.GameMenu;
-import view.MainMenu;
 import view.Login.PreLoginMenu;
+import view.MainMenu;
 import view.ProfileMenu.Avatar.AvatarMenu;
 import view.ProfileMenu.Avatar.DefaultAvatarMenu;
 import view.ProfileMenu.ChangePasswordMenu;
 import view.ProfileMenu.ChangeUsernameMenu;
 import view.ProfileMenu.ProfileMenu;
+import view.ScoreboardMenu;
 import view.SettingMenu;
-
-import java.io.IOException;
 
 public class Controller {
     private PreLoginMenu preLoginMenu = null;
@@ -24,6 +22,7 @@ public class Controller {
     private ChangeUsernameMenu changeUsernameMenu = null;
     private ChangePasswordMenu changePasswordMenu = null;
     private DefaultAvatarMenu defaultAvatarMenu = null;
+    private ScoreboardMenu scoreboardMenu = null;
     private GameMenu gameMenu = null;
     private SettingMenu settingMenu = null;
 
@@ -92,6 +91,10 @@ public class Controller {
         if (gameMenu == null) gameMenu = new GameMenu();
         return gameMenu;
     }
+    public ScoreboardMenu scoreboardMenu() {
+        if (scoreboardMenu == null) scoreboardMenu = new ScoreboardMenu();
+        return scoreboardMenu;
+    }
 
     public void logout() {
         currentUser = null;
@@ -114,6 +117,4 @@ public class Controller {
             pane.setEffect(null);
         }
     }
-
-
 }

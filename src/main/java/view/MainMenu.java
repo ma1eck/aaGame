@@ -57,12 +57,16 @@ public class MainMenu extends Application {
         return confirmation == 0;
     }
 
-    public void enterSetting(MouseEvent mouseEvent) throws Exception {
+    public void enterSetting() throws Exception {
         main.controller().settingMenu().start(stage);
     }
 
-    public void newGame(MouseEvent mouseEvent) throws Exception {
+    public void newGame() throws Exception {
         controllerMainMenu.newGame();
         main.controller().gameMenu().start(stage);
+    }
+
+    public void enterScoreboard() throws Exception {
+        main.controller().scoreboardMenu().start(stage);
     }
 }
