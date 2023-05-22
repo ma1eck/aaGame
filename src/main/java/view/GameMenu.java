@@ -103,6 +103,7 @@ public class GameMenu extends Application {
 
     public static void loseGame() {
         preEndGame();
+        pane.setStyle("-fx-background-color: #ce0909");
         pane.getChildren().add(new Text(stageWidth / 2, stageHeight / 2, "You lost!"));
         postEndGame();
 
@@ -111,6 +112,7 @@ public class GameMenu extends Application {
 
     public static void winGame() {
         preEndGame();
+        pane.setStyle("-fx-background-color: #75c516");
         pane.getChildren().add(new Text(stageWidth / 2, stageHeight / 2, "You won!"));
         postEndGame();
     }
