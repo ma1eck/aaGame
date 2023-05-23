@@ -17,6 +17,7 @@
             <Button text="setting" onMouseClicked="#enterSetting"/>
             <Button text="scoreboard" onMouseClicked="#enterScoreboard"/>
             <Button text="new game" onMouseClicked="#newGame"/>
+            <Button text="two player game" onMouseClicked="#twoPlayerGame"/>
             <Button text="exit game" onMouseClicked="#exitGame"/>
         </VBox>
     </center>

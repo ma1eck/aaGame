@@ -2,18 +2,22 @@ package Controller;
 
 import Model.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import view.GameMenu;
 import view.main;
 
-import java.io.InterruptedIOException;
 import java.util.ArrayList;
 
 import static java.lang.Math.min;
 
 public class GameController {
 
-    private Game game = main.controller().currentGame();
+    protected Game game ;
+
+    public GameController() {
+        this.game = main.controller().currentGame();
+    }
 
     public Circle getBigBall() {
         return game.getBigBall();
@@ -27,10 +31,10 @@ public class GameController {
         return game.rotatingRate();
     }
 
-    public void setABallOnBigBall(int angle) {
+    public void setABallOnBigBall(int angle, Color color) {
         Pane pane = GameMenu.pane();
         if (pane == null) return;
-        SmallBall smallBall = game.addABallWithAngle(angle, Game.player1Color);
+        SmallBall smallBall = game.addABallWithAngle(angle, color);
         pane.getChildren().add(smallBall);
         GameMenu.updateMainRotation();
         GameMenu.updateChangingBallsSizeAnimation();
@@ -41,7 +45,7 @@ public class GameController {
     }
 
     public ShootingBall makeAShootingBall(double angle, int startingX) {
-        return new ShootingBall(angle, Game.smallBallsRadius, startingX, Game.shootingY, Game.player1Color);
+        return new ShootingBall(angle, Game.smallBallsRadius, startingX, Game.shootingYPlayer1, Game.player1Color);
     }
     public Circle makeABall(int x, int y) {
         Circle ball = new Circle(x, y, Game.smallBallsRadius, Game.player1Color);
@@ -57,7 +61,7 @@ public class GameController {
         double absoluteAngle = angle - game.currentAngle;
         Pane pane = GameMenu.pane();
         pane.getChildren().remove(ball);
-        setABallOnBigBall((int) absoluteAngle);
+        setABallOnBigBall((int) absoluteAngle, ball.color());
         game.decreaseBallsToShoot();
         game.increaseScore();
         GameMenu.updateBallsToShootText(getBallsToShootNumber().toString());
@@ -140,7 +144,7 @@ public class GameController {
     }
 
     public int shootingY() {
-        return Game.shootingY;
+        return Game.shootingYPlayer1;
     }
     public int timeBetweenChangingShootingAngle() {
         return game.timeBetweenChangingShootingAngle();
@@ -168,4 +172,17 @@ public class GameController {
         currentUser.increaseTimeSpent(game.difficulty(), GameMenu.getTimePassedFromLabel());
         User.writeUsers();
     }
+
+    public boolean checkIfTimeIsUp(Long timePassed) {
+        if (Game.maxTimeOfAGame < timePassed) {
+            loseGame();
+            return true;
+        }
+        return false;
+    }
+
+    public Game currentGame() {
+        return game;
+    }
+
 }

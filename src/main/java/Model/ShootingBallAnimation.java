@@ -10,7 +10,7 @@ public class ShootingBallAnimation extends Transition {
     private ShootingBall ball;
     private Pane pane;
     private Game game;
-    private GameController gameController = new GameController();
+    private GameController gameController = GameMenu.controller();
 
     public ShootingBallAnimation(ShootingBall ball, Pane pane, Game game) {
         this.ball = ball;

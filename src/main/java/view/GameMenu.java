@@ -11,7 +11,6 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -30,23 +29,27 @@ public class GameMenu extends Application {
     public static GameMenu gameMenu;
     public static int stageWidth = 400;
     public static int stageHeight = 700;
-    private static Stage stage;
-    private static Scene scene;
-    private static boolean isGameOn = true;
-    private static int currentPhase = 1;
-    private static GameController controller;
-    private static int rotateRate;
-    private static HBox informationBar;
-    private static Text ballsToShootText;
-    private static Text scoreText;
-    private static Text timeText;
-    private static ProgressBar freezeProgressBar;
-    private static ArrayList<Animation> animations = new ArrayList<>();
-    private static RotateAnimation rotateAnimation = null;
-    private static Timeline timerTimeLine;
-    private static Pane pane;
-    private static AnimationTimer stopFreezeAnimationTimer = null; // to reset freeze
-    private static long startingGameTime;
+    protected static Stage stage;
+    protected static Scene scene;
+    protected static boolean isGameOn = true;
+    protected static int currentPhase = 1;
+    protected static GameController controller;
+    protected static int rotateRate;
+    protected static HBox informationBar;
+    protected static Text ballsToShootText;
+    protected static Text scoreText;
+    protected static Text timeText;
+    protected static ProgressBar freezeProgressBar;
+    protected static ArrayList<Animation> animations = new ArrayList<>();
+    protected static RotateAnimation rotateAnimation = null;
+    protected static Timeline timerTimeLine;
+    protected static Pane pane;
+    protected static AnimationTimer stopFreezeAnimationTimer = null; // to reset freeze
+    protected static long startingGameTime;
+
+    public static GameController controller() {
+        return controller;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -70,14 +73,15 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    private void setTimeLine() {
+    protected void setTimeLine() {
         timerTimeLine = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
             Long timePassed = (System.currentTimeMillis() - startingGameTime) / 1000;
             if (phase() != currentPhase) {
                 updatePhase();
             }
             showTimeOnScreen(timePassed);
-            getTimePassedFromLabel();
+           if (controller.checkIfTimeIsUp(timePassed)) return;
+
         }));
         timerTimeLine.setCycleCount(-1);
         timerTimeLine.play();
@@ -89,7 +93,6 @@ public class GameMenu extends Application {
         String secStr = timeText.getText().substring(3, 5);
         try {
             Integer timePassed = Integer.parseInt(minStr) * 60 + Integer.parseInt(secStr);
-            System.out.println(timePassed);
             return timePassed;
         }catch (NumberFormatException e) {
             System.out.println(e);
@@ -97,7 +100,7 @@ public class GameMenu extends Application {
         return null;
     }
 
-    private static void showTimeOnScreen(Long timePassed) {
+    protected static void showTimeOnScreen(Long timePassed) {
         Integer second = (int) (timePassed % 60);
         Integer minute = (int) (timePassed / 60);
         String minuteStr = minute < 10 ? ("0" + minute.toString()) : minute.toString();
@@ -106,7 +109,7 @@ public class GameMenu extends Application {
         timeText.setText(minuteStr + ":" + secondStr);
     }
 
-    private static void preEndGame() {
+    protected static void preEndGame() {
         isGameOn = false;
         for (Animation animation : animations) {
             if (!animation.getStatus().equals(STOPPED))
@@ -120,7 +123,6 @@ public class GameMenu extends Application {
         pane.setStyle("-fx-background-color: #ce0909");
         pane.getChildren().add(new Text(stageWidth / 2, stageHeight / 2, "You lost!"));
         postEndGame();
-
     }
 
 
@@ -131,14 +133,16 @@ public class GameMenu extends Application {
         postEndGame();
     }
 
-    private static void postEndGame() {
+    protected static void postEndGame() {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 try {
                     controller.addUserScore();
                     controller.addUserTimeSpent();
-                    main.controller().mainMenu().start(stage);
+                    AfterGameMenu.score = scoreText.getText();
+                    AfterGameMenu.timeSpent = timeText.getText();
+                    new AfterGameMenu().start(new Stage());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -161,7 +165,7 @@ public class GameMenu extends Application {
     }
 
 
-    private static void setInformationBarOnPane() {
+    protected static void setInformationBarOnPane() {
         informationBar = new HBox();
         informationBar.getChildren().add(new Text("Balls to shoot : "));
         ballsToShootText = new Text(controller.getBallsToShootNumber().toString());
@@ -181,17 +185,17 @@ public class GameMenu extends Application {
         pane.getChildren().add(informationBar);
     }
 
-    private static void setBallsOnPane() {
+    protected static void setBallsOnPane() {
         Circle bigBall = controller.getBigBall();
         pane.getChildren().add(bigBall);
         ArrayList<SmallBall> smallBalls = controller.getSmallBalls();
         pane.getChildren().addAll(smallBalls);
     }
 
-    private static Line pathLine;
-    private static Circle shootingBallInstance;
+    protected static Line pathLine;
+    protected static Circle shootingBallInstance;
 
-    private static void showShootingBallAndPath() {
+    protected static void showShootingBallAndPath() {
         if (pathLine != null) pane.getChildren().remove(pathLine);
         if (shootingBallInstance != null) pane.getChildren().remove(shootingBallInstance);
         pathLine = makePathLine();
@@ -201,13 +205,13 @@ public class GameMenu extends Application {
 
     }
 
-    private static Line makePathLine() {
+    protected static Line makePathLine() {
         return new Line(controller.shootingX(), controller.shootingY(),
                 controller.shootingX() + 100 * Math.sin(Math.toRadians(controller.shootingAngle()))
                 , controller.shootingY() - 100 * Math.cos(Math.toRadians(controller.shootingAngle())));
     }
 
-    private void setKeyEvents(Scene scene) {
+    protected void setKeyEvents(Scene scene) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -225,22 +229,22 @@ public class GameMenu extends Application {
         });
     }
 
-    private void shootingPosToRight() {
+    protected void shootingPosToRight() {
         if (controller.shootingX() < stageWidth - 20 - 3) controller.changeShootingX(3);
         showShootingBallAndPath();
     }
 
-    private void shootingPosToLeft() {
+    protected void shootingPosToLeft() {
         if (controller.shootingX() > 20 + 3) controller.changeShootingX(-3);
         showShootingBallAndPath();
     }
 
-    private void shootBall() {
+    protected void shootBall() {
         if (!isGameOn) return;
         int startingX = controller.shootingX(); // todo
         ShootingBall ball = controller.makeAShootingBall(controller.shootingAngle(), startingX);
         pane.getChildren().add(ball);
-        animations.add(new ShootingBallAnimation(ball, pane, main.controller().currentGame()));
+        animations.add(new ShootingBallAnimation(ball, pane, controller.currentGame()));
         animations.get(animations.size() - 1).play();
     }
 
@@ -252,7 +256,7 @@ public class GameMenu extends Application {
             rotateAnimation.stop();
             animations.remove(rotateAnimation);
         }
-        rotateAnimation = new RotateAnimation(main.controller().currentGame(), smallBalls, rotateRate);
+        rotateAnimation = new RotateAnimation(controller.currentGame(), smallBalls, rotateRate);
         animations.add(rotateAnimation);
         rotateAnimation.play();
     }
@@ -270,7 +274,7 @@ public class GameMenu extends Application {
         updateFreezeProgressBar();
     }
 
-    private static void returnToDefaultAfterFrozenDuration() {
+    protected static void returnToDefaultAfterFrozenDuration() {
         Timeline returnToDefaultRotation = new Timeline(
                 new KeyFrame(Duration.millis(controller.freezeTime() * 1000),
                         actionEvent -> {
@@ -301,7 +305,7 @@ public class GameMenu extends Application {
                 controller.numberOfStartingPlayableBalls();
     }
 
-    private static void updatePhase() {
+    protected static void updatePhase() {
         if (currentPhase == phase()) return;
 
         currentPhase = phase();
@@ -319,14 +323,14 @@ public class GameMenu extends Application {
     }
 
 
-    private static void startPhase2() {
+    protected static void startPhase2() {
         reversingRotateTimeLine();
         changingBallsSize();
     }
 
-    private static ChangingBallsSizeAnimation changingBallsSizeAnimation;
+    protected static ChangingBallsSizeAnimation changingBallsSizeAnimation;
 
-    private static void changingBallsSize() {
+    protected static void changingBallsSize() {
         changingBallsSizeAnimation = controller.changingBallsSizeAnimation();
         changingBallsSizeAnimation.play();
         animations.add(changingBallsSizeAnimation);
@@ -343,10 +347,10 @@ public class GameMenu extends Application {
         animations.add(changingBallsSizeAnimation);
     }
 
-    private static long lastRevers;
-    private static int nextReversTime;
+    protected static long lastRevers;
+    protected static int nextReversTime;
 
-    private static void reversingRotateTimeLine() {
+    protected static void reversingRotateTimeLine() {
         int minTimeSpending = 3;
         int maxTimeSpending = 7;
         lastRevers = System.currentTimeMillis();
@@ -365,9 +369,9 @@ public class GameMenu extends Application {
         animations.add(reversingRotate);
     }
 
-    private static boolean currentVisibility = true;
+    protected static boolean currentVisibility = true;
 
-    private static void startPhase3() {
+    protected static void startPhase3() {
         int invisibilityTime = controller.invisibilityTime();
         int visibilityTime = 3;
         Timeline makeBallsInvisibleAnimation = new Timeline(new KeyFrame(Duration.seconds
@@ -393,7 +397,7 @@ public class GameMenu extends Application {
         animations.add(makeBallsInvisibleAnimation);
     }
 
-    private static void startPhase4() {
+    protected static void startPhase4() {
         Timeline changingAngleAnimation = new Timeline(
                 new KeyFrame(Duration.millis(controller.timeBetweenChangingShootingAngle() * 1000),
                         actionEvent -> {

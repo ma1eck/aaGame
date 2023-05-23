@@ -7,13 +7,14 @@ import java.util.ArrayList;
 
 public class Game {
     public static final int bigBallCenterX = 200;
-    public static final int bigBallCenterY = 200;
+    public static final int bigBallCenterY = 350;
     public static final int bigBallRadius = 30;
     public static final int smallBallsRadius = 7;
-    public static final int smallBallsDistanceFromCenter = 120;
-    public static final int shootingY = 500;
+    public static final int smallBallsDistanceFromCenter = 100;
+    public static final int shootingYPlayer1 = 600;
     public static final Color player1Color = Color.rgb(127, 62, 62);
-    public static int ballsToShootBeforeFreezing = 5;
+    public static final int ballsToShootBeforeFreezing = 5;
+    public static final int maxTimeOfAGame = 30;
     private GameSetting gameSetting;
     private ArrayList<Integer> mapBallsPositions;
     private ArrayList<SmallBall> smallBalls;
@@ -23,7 +24,7 @@ public class Game {
     private int ballsToShoot;
     private int score = 0;
     private double shootingAngle = 0;
-    private int shootingX = bigBallCenterX;
+    private int shootingXPlayer1 = bigBallCenterX;
     private int numberOFBallsShotFromPreviousFreeze = 0;
 
     public Game(GameSetting gameSetting) {
@@ -61,12 +62,12 @@ public class Game {
     }
 
     public int shootingX() {
-        return shootingX;
+        return shootingXPlayer1;
     }
 
 
     public void changeShootingX(int amount) {
-        this.shootingX += amount;
+        this.shootingXPlayer1 += amount;
     }
 
     public SmallBall addABallWithAngle(double angle) {

@@ -21,6 +21,7 @@ public class PreLoginMenu extends Application {
     }
 
     public void start(Stage stage) throws Exception {
+        main.controller().setStage(stage);
         PreLoginMenu.stage = stage;
         stage.setTitle("aa");
         URL url = PreLoginMenu.class.getResource("/FXML/PreLoginMenu.fxml");

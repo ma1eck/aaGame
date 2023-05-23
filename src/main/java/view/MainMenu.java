@@ -69,4 +69,9 @@ public class MainMenu extends Application {
     public void enterScoreboard() throws Exception {
         main.controller().scoreboardMenu().start(stage);
     }
+
+    public void twoPlayerGame() throws Exception {
+        controllerMainMenu.newTwoPlayerGame();
+        main.controller().twoPlayerGameMenu().start(stage);
+    }
 }

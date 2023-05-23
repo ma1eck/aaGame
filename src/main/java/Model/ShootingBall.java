@@ -6,6 +6,7 @@ import javafx.scene.shape.Circle;
 public class ShootingBall extends Circle {
     public static final int speed = 10;
     private double angle; // this is in degree
+    private Color color;
 
     public ShootingBall(double angle,int radius, int x, int y) {
         this.angle = angle;
@@ -19,11 +20,18 @@ public class ShootingBall extends Circle {
         setCenterX(x);
         setCenterY(y);
         setFill(color);
+        this.color = color;
     }
+
+    public Color color() {
+        return color;
+    }
+
     public double xVelocity(){
         return  speed * Math.sin(Math.toRadians(angle));
     }
     public double yVelocity(){
         return speed * Math.cos(Math.toRadians(angle));
     }
+
 }
