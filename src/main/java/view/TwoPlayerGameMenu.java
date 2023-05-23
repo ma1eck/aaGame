@@ -37,7 +37,7 @@ public class TwoPlayerGameMenu extends GameMenu {
         showShootingBallAndPath();
         showShootingBallAndPathPlayer2();
         scene = new Scene(pane);
-        setKeyEvents(scene); // todo change events
+        setKeyEvents(scene); 
         rotateRate = controller.rotatingRate();
         updateMainRotation();
         stage.setScene(scene);
@@ -48,13 +48,22 @@ public class TwoPlayerGameMenu extends GameMenu {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().equals(KeyCode.TAB))
+                if (keyEvent.getCode().equals(KeyCode.NUMPAD1))
+                    main.controller().setMusicByIndex(0);
+                else if (keyEvent.getCode().equals(KeyCode.NUMPAD2))
+                    main.controller().setMusicByIndex(1);
+                else if (keyEvent.getCode().equals(KeyCode.NUMPAD3))
+                    main.controller().setMusicByIndex(2);
+                else if (keyEvent.getCode().equals(KeyCode.TAB))
                     freeze();
                 else if (keyEvent.getCode().equals(KeyCode.SPACE))
                     shootBall();
                 else if (keyEvent.getCode().equals(KeyCode.ENTER))
                     shootBallPlayer2();
-                else if (keyEvent.getCode().equals(KeyCode.LEFT) &&
+                else if (keyEvent.getCode().equals(KeyCode.M)) {
+                    main.controller().reverseMuteBoolean();
+                    main.controller().playMusicDependingOnSetting();
+                } else if (keyEvent.getCode().equals(KeyCode.LEFT) &&
                         phase() >= 4)
                     shootingPosToLeft();
                 else if (keyEvent.getCode().equals(KeyCode.A) && phase() >= 4)
@@ -136,6 +145,7 @@ public class TwoPlayerGameMenu extends GameMenu {
                 break;
         }
     }
+
     protected static void startPhase4() {
         Timeline changingAngleAnimation = new Timeline(
                 new KeyFrame(Duration.millis(controller.timeBetweenChangingShootingAngle() * 1000),

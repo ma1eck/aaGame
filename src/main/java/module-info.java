@@ -3,6 +3,7 @@ module aa {
     requires javafx.fxml;
     requires com.google.gson;
     requires java.desktop;
+    requires javafx.media;
 
 
     exports view;

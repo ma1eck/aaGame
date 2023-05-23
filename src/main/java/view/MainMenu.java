@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class MainMenu extends Application {
     private static ControllerMainMenu controllerMainMenu;
 
     public void start(Stage stage) throws Exception {
+        main.controller().playMusicDependingOnSetting();
         controllerMainMenu = new ControllerMainMenu();
         MainMenu.stage = stage;
         stage.setTitle("aa");

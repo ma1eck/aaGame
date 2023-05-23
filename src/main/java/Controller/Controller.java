@@ -5,6 +5,8 @@ import Model.TwoPlayerGame;
 import Model.User;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import view.*;
 import view.Login.PreLoginMenu;
@@ -13,6 +15,10 @@ import view.ProfileMenu.Avatar.DefaultAvatarMenu;
 import view.ProfileMenu.ChangePasswordMenu;
 import view.ProfileMenu.ChangeUsernameMenu;
 import view.ProfileMenu.ProfileMenu;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.security.spec.ECField;
 
 public class Controller {
     private PreLoginMenu preLoginMenu = null;
@@ -48,6 +54,7 @@ public class Controller {
     public void setCurrentGame(Game currentGame) {
         this.currentGame = currentGame;
     }
+
     public TwoPlayerGame currentTwoPlayerGame() {
         return currentTwoPlayerGame;
     }
@@ -100,6 +107,7 @@ public class Controller {
         if (gameMenu == null) gameMenu = new GameMenu();
         return gameMenu;
     }
+
     public TwoPlayerGameMenu twoPlayerGameMenu() {
         if (twoPlayerGameMenu == null) twoPlayerGameMenu = new TwoPlayerGameMenu();
         return twoPlayerGameMenu;
@@ -135,8 +143,50 @@ public class Controller {
     public Stage stage() {
         return stage;
     }
-    public void setStage(Stage stage){
+
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    public MediaPlayer mediaPlayer;
+
+    public void setDefaultMusic() {
+        String address = PreLoginMenu.class.getResource("/music/Mozart-Serenade-in-G-major.mp3")
+                .toString();
+        System.out.println(address);
+        Media media = new Media(address);
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+        playMusicDependingOnSetting();
+    }
+
+    public void playMusicDependingOnSetting() {
+        if (currentUser == null) mediaPlayer.play();
+        else mediaPlayer.setMute(currentUser.isMute());
+    }
+
+    public void reverseMuteBoolean() {
+        currentUser.setMute(!currentUser.isMute());
+    }
+
+    public void setMusicByIndex(int index) {
+        mediaPlayer.stop();
+        File folder = new File(
+                Controller.class.getResource(
+                        "/music").toString().substring("file:/".length()));
+        File[] musics = folder.listFiles();
+        String address = null;
+        try {
+            address = musics[index].toURI().toString();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        System.out.println(address);
+        Media media = new Media(address);
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+        playMusicDependingOnSetting();
+    }
 }

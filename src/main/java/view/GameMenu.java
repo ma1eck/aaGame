@@ -10,6 +10,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -40,6 +41,7 @@ public class GameMenu extends Application {
     protected static Text scoreText;
     protected static Text timeText;
     protected static ProgressBar freezeProgressBar;
+    protected static ChoiceBox<Integer> musicChoiceBox;
     protected static ArrayList<Animation> animations = new ArrayList<>();
     protected static RotateAnimation rotateAnimation = null;
     protected static Timeline timerTimeLine;
@@ -80,7 +82,7 @@ public class GameMenu extends Application {
                 updatePhase();
             }
             showTimeOnScreen(timePassed);
-           if (controller.checkIfTimeIsUp(timePassed)) return;
+            if (controller.checkIfTimeIsUp(timePassed)) return;
 
         }));
         timerTimeLine.setCycleCount(-1);
@@ -94,7 +96,7 @@ public class GameMenu extends Application {
         try {
             Integer timePassed = Integer.parseInt(minStr) * 60 + Integer.parseInt(secStr);
             return timePassed;
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println(e);
         }
         return null;
@@ -181,7 +183,6 @@ public class GameMenu extends Application {
         freezeProgressBar.setStyle("-fx-accent: #2f0254; ");
         updateFreezeProgressBar();
         informationBar.getChildren().add(freezeProgressBar);
-
         pane.getChildren().add(informationBar);
     }
 
@@ -215,11 +216,20 @@ public class GameMenu extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().equals(KeyCode.TAB))
+                if (keyEvent.getCode().equals(KeyCode.NUMPAD1))
+                    main.controller().setMusicByIndex(0);
+                else if (keyEvent.getCode().equals(KeyCode.NUMPAD2))
+                    main.controller().setMusicByIndex(1);
+                else if (keyEvent.getCode().equals(KeyCode.NUMPAD3))
+                    main.controller().setMusicByIndex(2);
+                else if (keyEvent.getCode().equals(KeyCode.TAB))
                     freeze();
                 else if (keyEvent.getCode().equals(KeyCode.SPACE))
                     shootBall();
-                else if ((keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.A)) &&
+                else if (keyEvent.getCode().equals(KeyCode.M)) {
+                    main.controller().reverseMuteBoolean();
+                    main.controller().playMusicDependingOnSetting();
+                } else if ((keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.A)) &&
                         phase() >= 4)
                     shootingPosToLeft();
                 else if ((keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.D)) &&
