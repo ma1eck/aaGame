@@ -65,6 +65,7 @@ public class GameMenu extends Application {
         pane.setPrefSize(stageWidth, stageHeight);
         main.controller().setGrayScaleBaseOnSetting(pane);
         setInformationBarOnPane();
+        setMusicChoiceBox();
         setBallsOnPane();
         showShootingBallAndPath();
         scene = new Scene(pane);
@@ -75,6 +76,19 @@ public class GameMenu extends Application {
         stage.show();
     }
 
+    protected void setMusicChoiceBox() {
+        musicChoiceBox = new ChoiceBox<>();
+        musicChoiceBox.setLayoutY(30); // todo clean
+        ArrayList<Integer> values = new ArrayList<>();
+        values.add(1); values.add(2); values.add(3);
+        musicChoiceBox.getItems().addAll(values);
+        musicChoiceBox.setOnAction(actionEvent -> {
+            main.controller().setMusicByIndex(musicChoiceBox.getValue() - 1 );
+        });
+        musicChoiceBox.setFocusTraversable(false);
+        pane.getChildren().add(musicChoiceBox);
+    }
+
     protected void setTimeLine() {
         timerTimeLine = new Timeline(new KeyFrame(Duration.millis(500), actionEvent -> {
             Long timePassed = (System.currentTimeMillis() - startingGameTime) / 1000;
@@ -82,7 +96,7 @@ public class GameMenu extends Application {
                 updatePhase();
             }
             showTimeOnScreen(timePassed);
-            if (controller.checkIfTimeIsUp(timePassed)) return;
+           if (controller.checkIfTimeIsUp(timePassed)) return;
 
         }));
         timerTimeLine.setCycleCount(-1);
@@ -96,7 +110,7 @@ public class GameMenu extends Application {
         try {
             Integer timePassed = Integer.parseInt(minStr) * 60 + Integer.parseInt(secStr);
             return timePassed;
-        } catch (NumberFormatException e) {
+        }catch (NumberFormatException e) {
             System.out.println(e);
         }
         return null;
@@ -216,20 +230,15 @@ public class GameMenu extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode().equals(KeyCode.NUMPAD1))
-                    main.controller().setMusicByIndex(0);
-                else if (keyEvent.getCode().equals(KeyCode.NUMPAD2))
-                    main.controller().setMusicByIndex(1);
-                else if (keyEvent.getCode().equals(KeyCode.NUMPAD3))
-                    main.controller().setMusicByIndex(2);
-                else if (keyEvent.getCode().equals(KeyCode.TAB))
+                if (keyEvent.getCode().equals(KeyCode.TAB))
                     freeze();
                 else if (keyEvent.getCode().equals(KeyCode.SPACE))
                     shootBall();
-                else if (keyEvent.getCode().equals(KeyCode.M)) {
+                else if (keyEvent.getCode().equals(KeyCode.M)){
                     main.controller().reverseMuteBoolean();
                     main.controller().playMusicDependingOnSetting();
-                } else if ((keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.A)) &&
+                }
+                else if ((keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.A)) &&
                         phase() >= 4)
                     shootingPosToLeft();
                 else if ((keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.getCode().equals(KeyCode.D)) &&

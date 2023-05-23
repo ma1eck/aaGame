@@ -33,11 +33,12 @@ public class TwoPlayerGameMenu extends GameMenu {
         pane.setPrefSize(stageWidth, stageHeight);
         main.controller().setGrayScaleBaseOnSetting(pane);
         setInformationBarOnPane();
+        setMusicChoiceBox();
         setBallsOnPane();
         showShootingBallAndPath();
         showShootingBallAndPathPlayer2();
         scene = new Scene(pane);
-        setKeyEvents(scene); 
+        setKeyEvents(scene);
         rotateRate = controller.rotatingRate();
         updateMainRotation();
         stage.setScene(scene);

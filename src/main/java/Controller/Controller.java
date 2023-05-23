@@ -153,7 +153,6 @@ public class Controller {
     public void setDefaultMusic() {
         String address = PreLoginMenu.class.getResource("/music/Mozart-Serenade-in-G-major.mp3")
                 .toString();
-        System.out.println(address);
         Media media = new Media(address);
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -182,7 +181,6 @@ public class Controller {
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.println(address);
         Media media = new Media(address);
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);

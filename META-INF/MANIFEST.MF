@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: view.main
+Class-Path: D:\daneshgah\AP\tamrin\t3\aaGame\target\classes
+
